@@ -1,8 +1,8 @@
 ﻿namespace PhotographiApp.Data.Configurations
 {
-    using PhotographiApp.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using PhotographiApp.Data.Models;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {

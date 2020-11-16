@@ -3,12 +3,11 @@
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc;
     using PhotographiApp.Data.Common.Repositories;
     using PhotographiApp.Data.Models;
     using PhotographiApp.Services.Data;
     using PhotographiApp.Web.ViewModels.Settings;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class SettingsController : BaseController
     {

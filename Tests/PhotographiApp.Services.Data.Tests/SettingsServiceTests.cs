@@ -4,15 +4,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+    using Moq;
     using PhotographiApp.Data;
     using PhotographiApp.Data.Common.Repositories;
     using PhotographiApp.Data.Models;
     using PhotographiApp.Data.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
-
-    using Moq;
-
     using Xunit;
 
     public class SettingsServiceTests

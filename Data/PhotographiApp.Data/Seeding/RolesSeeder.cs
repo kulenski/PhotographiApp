@@ -4,11 +4,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using PhotographiApp.Common;
-    using PhotographiApp.Data.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using PhotographiApp.Common;
+    using PhotographiApp.Data.Models;
 
     internal class RolesSeeder : ISeeder
     {

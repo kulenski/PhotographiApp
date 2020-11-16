@@ -2,9 +2,8 @@
 {
     using System.Diagnostics;
 
-    using PhotographiApp.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using PhotographiApp.Web.ViewModels;
 
     public class HomeController : BaseController
     {

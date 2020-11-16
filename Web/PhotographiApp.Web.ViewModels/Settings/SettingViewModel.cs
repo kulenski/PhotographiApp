@@ -1,9 +1,8 @@
 ﻿namespace PhotographiApp.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using PhotographiApp.Data.Models;
     using PhotographiApp.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

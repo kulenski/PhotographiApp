@@ -5,6 +5,11 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using CommandLine;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using PhotographiApp.Data;
     using PhotographiApp.Data.Common;
     using PhotographiApp.Data.Common.Repositories;
@@ -13,13 +18,6 @@
     using PhotographiApp.Data.Seeding;
     using PhotographiApp.Services.Data;
     using PhotographiApp.Services.Messaging;
-
-    using CommandLine;
-
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
 
     public static class Program
     {

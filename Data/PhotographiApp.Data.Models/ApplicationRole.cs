@@ -3,9 +3,8 @@ namespace PhotographiApp.Data.Models
 {
     using System;
 
-    using PhotographiApp.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using PhotographiApp.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

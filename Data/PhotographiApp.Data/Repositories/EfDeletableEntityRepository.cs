@@ -4,10 +4,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using PhotographiApp.Data.Common.Models;
     using PhotographiApp.Data.Common.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
 
     public class EfDeletableEntityRepository<TEntity> : EfRepository<TEntity>, IDeletableEntityRepository<TEntity>
         where TEntity : class, IDeletableEntity

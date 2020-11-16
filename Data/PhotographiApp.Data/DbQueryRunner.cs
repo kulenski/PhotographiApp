@@ -3,9 +3,8 @@
     using System;
     using System.Threading.Tasks;
 
-    using PhotographiApp.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+    using PhotographiApp.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

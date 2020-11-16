@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using PhotographiApp.Data.Common.Models;
-    using PhotographiApp.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using PhotographiApp.Data.Common.Models;
+    using PhotographiApp.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {

@@ -2,9 +2,8 @@
 {
     using System.Linq;
 
-    using PhotographiApp.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using PhotographiApp.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {
