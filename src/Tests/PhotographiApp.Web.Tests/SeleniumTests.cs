@@ -1,15 +1,17 @@
 ﻿namespace PhotographiApp.Web.Tests
 {
+    using System;
+
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
     using OpenQA.Selenium.Remote;
-
     using Xunit;
 
-    public class SeleniumTests : IClassFixture<SeleniumServerFactory<Startup>>
+    public class SeleniumTests : IClassFixture<SeleniumServerFactory<Startup>>, IDisposable
     {
         private readonly SeleniumServerFactory<Startup> server;
         private readonly IWebDriver browser;
+        private bool disposed = false;
 
         // Be sure that selenium-server-standalone-3.141.59.jar is running
         public SeleniumTests(SeleniumServerFactory<Startup> server)
@@ -28,6 +30,27 @@
             Assert.Contains(
                 this.browser.FindElements(By.CssSelector("footer a")),
                 x => x.GetAttribute("href").EndsWith("/Home/Privacy"));
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    this.browser.Dispose();
+                    this.server.Dispose();
+                }
+
+                // Indicate that the instance has been disposed.
+                this.disposed = true;
+            }
         }
     }
 }
