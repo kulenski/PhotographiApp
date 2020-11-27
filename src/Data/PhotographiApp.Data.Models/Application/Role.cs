@@ -1,19 +1,19 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
-namespace PhotographiApp.Data.Models
+namespace PhotographiApp.Data.Models.Application
 {
     using System;
 
     using Microsoft.AspNetCore.Identity;
     using PhotographiApp.Data.Common.Models;
 
-    public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
+    public class Role : IdentityRole, IAuditInfo, IDeletableEntity
     {
-        public ApplicationRole()
+        public Role()
             : this(null)
         {
         }
 
-        public ApplicationRole(string name)
+        public Role(string name)
             : base(name)
         {
             this.Id = Guid.NewGuid().ToString();

@@ -13,7 +13,7 @@
     using PhotographiApp.Data;
     using PhotographiApp.Data.Common;
     using PhotographiApp.Data.Common.Repositories;
-    using PhotographiApp.Data.Models;
+    using PhotographiApp.Data.Models.Application;
     using PhotographiApp.Data.Repositories;
     using PhotographiApp.Data.Seeding;
     using PhotographiApp.Services.Data;
@@ -70,8 +70,8 @@
                 options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
                     .UseLoggerFactory(new LoggerFactory()));
 
-            services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<User>(IdentityOptionsProvider.GetIdentityOptions)
+                .AddRoles<Role>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

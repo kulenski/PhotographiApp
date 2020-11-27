@@ -1,8 +1,8 @@
 ﻿@using PhotographiApp.Common
-@using PhotographiApp.Data.Models
+@using PhotographiApp.Data.Models.Application
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 <ul class="navbar-nav">
     @if (this.SignInManager.IsSignedIn(this.User))

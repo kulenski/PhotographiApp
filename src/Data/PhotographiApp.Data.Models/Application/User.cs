@@ -1,5 +1,5 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
-namespace PhotographiApp.Data.Models
+namespace PhotographiApp.Data.Models.Application
 {
     using System;
     using System.Collections.Generic;
@@ -7,9 +7,9 @@ namespace PhotographiApp.Data.Models
     using Microsoft.AspNetCore.Identity;
     using PhotographiApp.Data.Common.Models;
 
-    public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
+    public class User : IdentityUser, IAuditInfo, IDeletableEntity
     {
-        public ApplicationUser()
+        public User()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Roles = new HashSet<IdentityUserRole<string>>();
@@ -32,5 +32,14 @@ namespace PhotographiApp.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        // Application specific navigation properties
+        public virtual ICollection<Album> Albums { get; set; }
+
+        public virtual ICollection<Photo> Photos { get; set; }
+
+        public virtual ICollection<Group> Groups { get; set; }
+
+        public virtual ICollection<PhotoFavorite> FavoritePhotos { get; set; }
     }
 }

@@ -13,7 +13,7 @@
     using PhotographiApp.Data;
     using PhotographiApp.Data.Common;
     using PhotographiApp.Data.Common.Repositories;
-    using PhotographiApp.Data.Models;
+    using PhotographiApp.Data.Models.Application;
     using PhotographiApp.Data.Repositories;
     using PhotographiApp.Data.Seeding;
     using PhotographiApp.Services.Data;
@@ -36,8 +36,8 @@
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<User>(IdentityOptionsProvider.GetIdentityOptions)
+                .AddRoles<Role>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.Configure<CookiePolicyOptions>(
                 options =>

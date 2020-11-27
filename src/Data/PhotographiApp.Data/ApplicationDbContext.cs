@@ -10,8 +10,9 @@
     using Microsoft.EntityFrameworkCore;
     using PhotographiApp.Data.Common.Models;
     using PhotographiApp.Data.Models;
+    using PhotographiApp.Data.Models.Application;
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class ApplicationDbContext : IdentityDbContext<User, Role, string>
     {
         private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
             typeof(ApplicationDbContext).GetMethod(
