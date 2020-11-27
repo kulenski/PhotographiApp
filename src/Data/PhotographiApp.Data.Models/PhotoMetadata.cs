@@ -19,9 +19,5 @@
         public string Flash { get; set; }
 
         public DateTime? DateTaken { get; set; }
-
-        public string PhotoId { get; set; }
-
-        public virtual Photo Photo { get; set; }
     }
 }

@@ -22,11 +22,11 @@
 
         public bool IsCommentAllowed { get; set; }
 
-        public long GroupId { get; set; }
+        public string GroupId { get; set; }
 
         public virtual Group Group { get; set; }
 
-        public int LicenseId { get; set; }
+        public string LicenseId { get; set; }
 
         public virtual License License { get; set; }
 
@@ -36,7 +36,7 @@
 
         public virtual ICollection<PhotoAlbum> Albums { get; set; }
 
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<PhotoTag> Tags { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
 

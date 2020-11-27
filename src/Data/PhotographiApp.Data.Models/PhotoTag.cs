@@ -2,13 +2,13 @@
 {
     using PhotographiApp.Data.Common.Models;
 
-    public class PhotoTag : BaseModel<long>
+    public class PhotoTag : BaseModel<int>
     {
-        public long PhotoId { get; set; }
+        public string PhotoId { get; set; }
 
         public virtual Photo Photo { get; set; }
 
-        public long TagId { get; set; }
+        public string TagId { get; set; }
 
         public virtual Tag Tag { get; set; }
     }
