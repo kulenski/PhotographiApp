@@ -15,16 +15,16 @@ namespace PhotographiApp.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -48,7 +48,7 @@ namespace PhotographiApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -183,12 +183,12 @@ namespace PhotographiApp.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -196,7 +196,7 @@ namespace PhotographiApp.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
+                        .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
@@ -221,8 +221,8 @@ namespace PhotographiApp.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -240,12 +240,12 @@ namespace PhotographiApp.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -263,19 +263,19 @@ namespace PhotographiApp.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                        .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
+                        .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
@@ -353,7 +353,7 @@ namespace PhotographiApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -447,6 +447,9 @@ namespace PhotographiApp.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ThumbnailHref")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -473,7 +476,7 @@ namespace PhotographiApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("AlbumId")
                         .HasColumnType("nvarchar(450)");
@@ -501,7 +504,7 @@ namespace PhotographiApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -529,7 +532,7 @@ namespace PhotographiApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Aperture")
                         .HasColumnType("nvarchar(max)");
@@ -568,7 +571,7 @@ namespace PhotographiApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -596,7 +599,7 @@ namespace PhotographiApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -775,6 +778,8 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Application.User", "Owner")
                         .WithMany("Albums")
                         .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("PhotographiApp.Data.Models.Comment", b =>
@@ -786,6 +791,10 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Application.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Photo");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PhotographiApp.Data.Models.Group", b =>
@@ -793,6 +802,8 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Application.User", "Owner")
                         .WithMany("Groups")
                         .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("PhotographiApp.Data.Models.GroupMembership", b =>
@@ -804,6 +815,10 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Application.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PhotographiApp.Data.Models.Photo", b =>
@@ -825,6 +840,12 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Application.User", null)
                         .WithMany("Photos")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("License");
+
+                    b.Navigation("Metadata");
                 });
 
             modelBuilder.Entity("PhotographiApp.Data.Models.PhotoAlbum", b =>
@@ -836,6 +857,10 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Photo", "Photo")
                         .WithMany("Albums")
                         .HasForeignKey("PhotoId");
+
+                    b.Navigation("Album");
+
+                    b.Navigation("Photo");
                 });
 
             modelBuilder.Entity("PhotographiApp.Data.Models.PhotoFavorite", b =>
@@ -847,6 +872,10 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Application.User", "User")
                         .WithMany("FavoritePhotos")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Photo");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PhotographiApp.Data.Models.PhotoTag", b =>
@@ -858,6 +887,10 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Tag", "Tag")
                         .WithMany("Photos")
                         .HasForeignKey("TagId");
+
+                    b.Navigation("Photo");
+
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("PhotographiApp.Data.Models.Topic", b =>
@@ -869,6 +902,10 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Group", "Group")
                         .WithMany("Topics")
                         .HasForeignKey("GroupId");
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("PhotographiApp.Data.Models.TopicReply", b =>
@@ -880,6 +917,62 @@ namespace PhotographiApp.Data.Migrations
                     b.HasOne("PhotographiApp.Data.Models.Application.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Toplic");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PhotographiApp.Data.Models.Album", b =>
+                {
+                    b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("PhotographiApp.Data.Models.Application.User", b =>
+                {
+                    b.Navigation("Albums");
+
+                    b.Navigation("Claims");
+
+                    b.Navigation("FavoritePhotos");
+
+                    b.Navigation("Groups");
+
+                    b.Navigation("Logins");
+
+                    b.Navigation("Photos");
+
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("PhotographiApp.Data.Models.Group", b =>
+                {
+                    b.Navigation("Memberships");
+
+                    b.Navigation("Photos");
+
+                    b.Navigation("Topics");
+                });
+
+            modelBuilder.Entity("PhotographiApp.Data.Models.Photo", b =>
+                {
+                    b.Navigation("Albums");
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("Favorites");
+
+                    b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("PhotographiApp.Data.Models.Tag", b =>
+                {
+                    b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("PhotographiApp.Data.Models.Topic", b =>
+                {
+                    b.Navigation("Replies");
                 });
 #pragma warning restore 612, 618
         }

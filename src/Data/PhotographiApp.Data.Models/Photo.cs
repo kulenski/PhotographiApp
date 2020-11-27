@@ -18,6 +18,8 @@
 
         public string Href { get; set; }
 
+        public string ThumbnailHref { get; set; }
+
         public bool IsPrivate { get; set; }
 
         public bool IsCommentAllowed { get; set; }
