@@ -14,9 +14,6 @@
         [MaxLength(500)]
         public string Description { get; set; }
 
-        public string AlbumId { get; set; }
-
-        [Required]
         public string LicenseId { get; set; }
 
         [Required]
@@ -29,5 +26,7 @@
         public IFormFile File { get; set; }
 
         public ICollection<string> Tags { get; set; }
+
+        public ICollection<KeyValuePair<string, string>> Licenses { get; set; }
     }
 }

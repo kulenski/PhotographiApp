@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\PhotographiApp.Data.Common\PhotographiApp.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\PhotographiApp.Data.Models\PhotographiApp.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\PhotographiApp.Web.ViewModels\PhotographiApp.Web.ViewModels.csproj" />
     <ProjectReference Include="..\PhotographiApp.Services.Mapping\PhotographiApp.Services.Mapping.csproj" />
   </ItemGroup>
 

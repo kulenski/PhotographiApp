@@ -68,6 +68,9 @@
             services.AddTransient<IPhotoValidationService, PhotoValidationService>();
             services.AddTransient<IPhotoMetadataReaderService, PhotoMetadataReaderService>();
             services.AddTransient<IPhotoStorageService, PhotoStorageService>();
+            services.AddTransient<IAlbumsService, AlbumsService>();
+            services.AddTransient<ILicenseService, LicenseService>();
+            services.AddTransient<IPhotoService, PhotoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
