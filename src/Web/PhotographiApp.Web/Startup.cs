@@ -16,7 +16,9 @@
     using PhotographiApp.Data.Models.Application;
     using PhotographiApp.Data.Repositories;
     using PhotographiApp.Data.Seeding;
+    using PhotographiApp.Services;
     using PhotographiApp.Services.Data;
+    using PhotographiApp.Services.Interfaces;
     using PhotographiApp.Services.Mapping;
     using PhotographiApp.Services.Messaging;
     using PhotographiApp.Web.ViewModels;
@@ -63,6 +65,9 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IPhotoValidationService, PhotoValidationService>();
+            services.AddTransient<IPhotoMetadataReaderService, PhotoMetadataReaderService>();
+            services.AddTransient<IPhotoStorageService, PhotoStorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
