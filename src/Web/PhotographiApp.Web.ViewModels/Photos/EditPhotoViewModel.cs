@@ -3,7 +3,10 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class UpdatePhotoInputModel
+    using PhotographiApp.Data.Models;
+    using PhotographiApp.Services.Mapping;
+
+    public class EditPhotoViewModel : IMapFrom<Photo>
     {
         [Required]
         [MinLength(4)]

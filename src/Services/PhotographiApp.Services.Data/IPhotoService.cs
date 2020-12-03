@@ -9,7 +9,7 @@
     {
         Task CreatePhotoAsync(string userId, string imagePath, CreatePhotoInputModel model);
 
-        Task UpdatePhotoAsync(string photoId, string userId, UpdatePhotoInputModel model);
+        Task UpdatePhotoAsync(string photoId, string userId, EditPhotoViewModel model);
 
         Task DeletePhotoAsync(string photoId, string userId);
 

@@ -13,6 +13,9 @@
                 <a asp-controller="Photo" asp-action="Edit" asp-route-id="@Model.Id" class="nav-link active">Edit</a>
             </li>
             <li class="nav-item">
+                <a asp-controller="Photo" asp-action="Delete" asp-route-id="@Model.Id" class="nav-link active">Delete</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">Add to album</a>
             </li>
         </ul>

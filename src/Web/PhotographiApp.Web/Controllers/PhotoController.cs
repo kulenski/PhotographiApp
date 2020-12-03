@@ -105,15 +105,76 @@
         }
 
         [HttpGet]
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            return this.View();
+            string userId = null;
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
+                userId = user.Id;
+            }
+
+            var model = this.photoService.GetById<EditPhotoViewModel>(id, userId);
+            if (model == null)
+            {
+                this.ViewData["Error"] = "Photo not found!";
+                return this.View("PhotoLoadingError");
+            }
+
+            var licenses = this.licenseService.GetAll();
+            model.Licenses = licenses;
+
+            return this.View(model);
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody]object model)
+        public async Task<IActionResult> Edit(string id, EditPhotoViewModel model)
         {
-            return null;
+            if (!this.ModelState.IsValid)
+            {
+                var licenses = this.licenseService.GetAll();
+                model.Licenses = licenses;
+
+                return this.View(model);
+            }
+
+            try
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
+                await this.photoService.UpdatePhotoAsync(id, user.Id, model);
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+                var licenses = this.licenseService.GetAll();
+                model.Licenses = licenses;
+                return this.View(model);
+            }
+
+            return this.RedirectToAction("Show", "Photo", new { Id = id });
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            string userId = null;
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
+                userId = user.Id;
+            }
+
+            try
+            {
+                await this.photoService.DeletePhotoAsync(id, userId);
+                return this.RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                this.ViewData["Error"] = ex.Message;
+                return this.View("PhotoLoadingError");
+            }
         }
     }
 }

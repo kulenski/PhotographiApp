@@ -51,7 +51,7 @@
             await this.photoRespository.SaveChangesAsync();
         }
 
-        public async Task UpdatePhotoAsync(string photoId, string userId, UpdatePhotoInputModel model)
+        public async Task UpdatePhotoAsync(string photoId, string userId, EditPhotoViewModel model)
         {
             var photo = this.photoRespository.All().Where(x => x.Id == photoId && x.OwnerId == userId).FirstOrDefault();
 
