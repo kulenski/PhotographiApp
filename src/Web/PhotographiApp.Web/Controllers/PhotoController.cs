@@ -74,7 +74,7 @@
         }
 
         [HttpGet]
-        public IActionResult Show()
+        public IActionResult Show(string photoId)
         {
             return null;
         }

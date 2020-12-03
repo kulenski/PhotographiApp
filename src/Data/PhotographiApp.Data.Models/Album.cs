@@ -11,6 +11,7 @@
         public Album()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Photos = new HashSet<PhotoAlbum>();
         }
 
         public string Name { get; set; }

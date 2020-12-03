@@ -30,10 +30,6 @@
 
         public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<Group> Groups { get; set; }
-
-        public DbSet<GroupMembership> GroupMemberships { get; set; }
-
         public DbSet<License> Licenses { get; set; }
 
         public DbSet<Photo> Photos { get; set; }
@@ -41,8 +37,6 @@
         public DbSet<PhotoAlbum> PhotoAlbums { get; set; }
 
         public DbSet<PhotoFavorite> PhotoFavorites { get; set; }
-
-        public DbSet<PhotoMetadata> PhotoMetadatas { get; set; }
 
         public DbSet<PhotoTag> PhotoTags { get; set; }
 

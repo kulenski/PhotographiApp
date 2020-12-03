@@ -4,12 +4,17 @@
     using System.Collections.Generic;
 
     using PhotographiApp.Data.Common.Models;
+    using PhotographiApp.Data.Models.Application;
 
     public class Photo : BaseDeletableModel<string>, IAuditInfo
     {
         public Photo()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Albums = new HashSet<PhotoAlbum>();
+            this.Comments = new HashSet<Comment>();
+            this.Favorites = new HashSet<PhotoFavorite>();
+            this.Tags = new HashSet<PhotoTag>();
         }
 
         public string Title { get; set; }
@@ -24,17 +29,27 @@
 
         public bool IsCommentAllowed { get; set; }
 
-        public string GroupId { get; set; }
+        public string OwnerId { get; set; }
 
-        public virtual Group Group { get; set; }
+        public virtual User Owner { get; set; }
 
         public string LicenseId { get; set; }
 
         public virtual License License { get; set; }
 
-        public int MetadataId { get; set; }
+        public string Camera { get; set; }
 
-        public virtual PhotoMetadata Metadata { get; set; }
+        public string Lens { get; set; }
+
+        public string ExposureTime { get; set; }
+
+        public string Aperture { get; set; }
+
+        public string Iso { get; set; }
+
+        public string Flash { get; set; }
+
+        public DateTime? DateTaken { get; set; }
 
         public virtual ICollection<PhotoAlbum> Albums { get; set; }
 

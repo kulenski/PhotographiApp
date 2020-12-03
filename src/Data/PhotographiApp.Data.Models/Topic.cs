@@ -11,19 +11,16 @@
         public Topic()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Replies = new HashSet<TopicReply>();
         }
 
         public string Title { get; set; }
 
         public string Content { get; set; }
 
-        public string GroupId { get; set; }
+        public string OwnerId { get; set; }
 
-        public virtual Group Group { get; set; }
-
-        public string CreatedByUserId { get; set; }
-
-        public virtual User CreatedByUser { get; set; }
+        public virtual User Owner { get; set; }
 
         public virtual ICollection<TopicReply> Replies { get; set; }
     }

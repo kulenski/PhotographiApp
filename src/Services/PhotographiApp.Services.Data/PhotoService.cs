@@ -13,14 +13,10 @@
     {
         private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif" };
         private readonly IDeletableEntityRepository<Photo> photoRespository;
-        private readonly IRepository<PhotoMetadata> photoMetadataRepository;
 
-        public PhotoService(
-            IDeletableEntityRepository<Photo> photoRespository,
-            IRepository<PhotoMetadata> photoMetadataRepository)
+        public PhotoService(IDeletableEntityRepository<Photo> photoRespository)
         {
             this.photoRespository = photoRespository;
-            this.photoMetadataRepository = photoMetadataRepository;
         }
 
         public async Task CreatePhotoAsync(string userId, string groupId, string imagePath, UploadPhotoInputModel model)
@@ -32,11 +28,8 @@
                 LicenseId = model.LicenseId,
                 IsCommentAllowed = model.IsCommentAllowed,
                 IsPrivate = model.IsPrivate,
+                OwnerId = userId,
             };
-
-            var metadata = new PhotoMetadata();
-
-            photo.Metadata = metadata;
 
             Directory.CreateDirectory($"{imagePath}/photos/");
 
@@ -52,7 +45,6 @@
             using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
             await model.File.CopyToAsync(fileStream);
 
-            await this.photoMetadataRepository.AddAsync(metadata);
             await this.photoRespository.AddAsync(photo);
             await this.photoRespository.SaveChangesAsync();
         }

@@ -38,8 +38,6 @@ namespace PhotographiApp.Data.Models.Application
 
         public virtual ICollection<Photo> Photos { get; set; }
 
-        public virtual ICollection<Group> Groups { get; set; }
-
         public virtual ICollection<PhotoFavorite> FavoritePhotos { get; set; }
     }
 }
