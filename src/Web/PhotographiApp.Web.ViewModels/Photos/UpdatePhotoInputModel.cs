@@ -3,9 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using Microsoft.AspNetCore.Http;
-
-    public class UploadPhotoInputModel
+    public class UpdatePhotoInputModel
     {
         [Required]
         [MinLength(4)]
@@ -21,11 +19,6 @@
 
         [Required]
         public bool IsCommentAllowed { get; set; }
-
-        [Required]
-        public IFormFile File { get; set; }
-
-        public ICollection<string> Tags { get; set; }
 
         public ICollection<KeyValuePair<string, string>> Licenses { get; set; }
     }

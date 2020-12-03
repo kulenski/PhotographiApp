@@ -1,0 +1,47 @@
+﻿@using PhotographiApp.Web.ViewModels.Photos;
+@model PhotoViewModel
+@{
+    ViewData["Title"] = Model.Title;
+    var imageHref = $"/images/{Model.Href}";
+}
+
+@if (Model.IsOwnerByCurrentUser)
+{
+    <div class="row" style="margin-left: 0; margin-right:0">
+        <ul class="nav" style="background-color: #fafafa; width: 100%; border-bottom: 1px solid #cccccc;">
+            <li class="nav-item">
+                <a asp-controller="Photo" asp-action="Edit" asp-route-id="@Model.Id" class="nav-link active">Edit</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Add to album</a>
+            </li>
+        </ul>
+    </div>
+}
+
+<div class="row" style="margin-left: 0; margin-right:0">
+    <img src="@imageHref" class="img-fluid" alt="@Model.Title">
+</div>
+<div class="row" style="margin-left: 0; margin-right:0">
+    <div class="col">
+        <h1>@Model.Title</h1>
+        <h4>@Model.Description</h4>
+    </div>
+</div>
+<hr />
+<div class="row" style="margin-left: 0; margin-right:0">
+    <div class="col-md-6">
+        <h4>Comments</h4>
+        <hr />
+        <partial name="_Comments" model="@Model.Comments" />
+        <br />
+        @if (Model.IsCommentAllowed && User.Identity.IsAuthenticated)
+        {
+            <button class="btn btn-primary">Add comment</button>
+        }
+    </div>
+    <div class="col-md-6">
+        <h4>Albums</h4>
+        <hr />
+    </div>
+</div>

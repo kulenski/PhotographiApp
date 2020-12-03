@@ -34,7 +34,7 @@
         [HttpGet]
         public IActionResult Upload()
         {
-            var viewModel = new UploadPhotoInputModel();
+            var viewModel = new CreatePhotoInputModel();
             var licenses = this.licenseService.GetAll();
             viewModel.Licenses = licenses;
 
@@ -42,7 +42,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload(UploadPhotoInputModel model)
+        public async Task<IActionResult> Upload(CreatePhotoInputModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -55,7 +55,7 @@
 
             try
             {
-                await this.photoService.CreatePhotoAsync(user.Id, null, $"{this.hostingEnvironment.WebRootPath}/images", model);
+                await this.photoService.CreatePhotoAsync(user.Id, $"{this.hostingEnvironment.WebRootPath}/images", model);
             }
             catch (Exception ex)
             {
@@ -73,10 +73,35 @@
             return this.View();
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public IActionResult Show(string photoId)
+        public async Task<IActionResult> Show(string id)
         {
-            return null;
+            string userId = null;
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
+                userId = user.Id;
+            }
+
+            var model = this.photoService.GetById<PhotoViewModel>(id, userId);
+            if (model == null)
+            {
+                this.ViewData["Error"] = "Photo not found!";
+                return this.View("PhotoLoadingError");
+            }
+
+            if (model.OwnerId == userId)
+            {
+                model.IsOwnerByCurrentUser = true;
+            }
+            else
+            {
+                model.IsOwnerByCurrentUser = false;
+            }
+
+            return this.View(model);
         }
 
         [HttpGet]
