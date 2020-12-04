@@ -1,9 +1,20 @@
-﻿@using PhotographiApp.Common
+﻿@using PhotographiApp.Web.ViewModels.Photos
+@model ICollection<PhotoViewModel>
 @{
-    this.ViewData["Title"] = "Home Page";
+    this.ViewData["Title"] = "Welcome to Photographi";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-12">
+        <h1>Latest uploads</h1>
+    </div>
+    
 </div>
+<div class="row">
+    <div class="col-12">
+        @foreach (var photo in Model)
+        {
+            <a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.Id"><img src="@photo.ThumbnailHref" alt="@photo.Title" /></a>
+        }
+    </div>
+</div>
+

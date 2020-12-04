@@ -3,13 +3,23 @@
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
+    using PhotographiApp.Services.Data;
     using PhotographiApp.Web.ViewModels;
+    using PhotographiApp.Web.ViewModels.Photos;
 
     public class HomeController : BaseController
     {
+        private readonly IPhotoService photoService;
+
+        public HomeController(IPhotoService photoService)
+        {
+            this.photoService = photoService;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var latestPhotos = this.photoService.GetLatestPublic<PhotoViewModel>();
+            return this.View(latestPhotos);
         }
 
         public IActionResult Privacy()

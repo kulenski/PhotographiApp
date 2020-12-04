@@ -110,5 +110,17 @@
 
             return photos;
         }
+
+        public ICollection<T> GetLatestPublic<T>()
+        {
+            var photos = this.photoRespository
+                    .AllAsNoTracking()
+                    .Where(x => x.IsPrivate == false)
+                    .OrderByDescending(x => x.CreatedOn)
+                    .Take(20)
+                    .To<T>()
+                    .ToList();
+            return photos;
+        }
     }
 }

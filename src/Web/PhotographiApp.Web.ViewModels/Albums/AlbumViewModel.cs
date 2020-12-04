@@ -1,6 +1,9 @@
 ﻿namespace PhotographiApp.Web.ViewModels.Albums
 {
-    public class AlbumViewModel
+    using PhotographiApp.Data.Models;
+    using PhotographiApp.Services.Mapping;
+
+    public class AlbumViewModel : IMapFrom<Album>
     {
         public string Name { get; set; }
 

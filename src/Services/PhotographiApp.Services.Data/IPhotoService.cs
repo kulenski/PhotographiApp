@@ -16,5 +16,7 @@
         T GetById<T>(string photoId, string userId);
 
         ICollection<T> GetAllByUserId<T>(string userId);
+
+        ICollection<T> GetLatestPublic<T>();
     }
 }

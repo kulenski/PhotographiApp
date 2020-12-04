@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace PhotographiApp.Data.Migrations
+﻿namespace PhotographiApp.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class UpdatePhoto : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
