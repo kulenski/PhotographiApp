@@ -9,12 +9,16 @@
     {
         Task CreateAsync(CreateAlbumInputModel model, string userId);
 
+        Task UpdateAsync(string albumId, string userId, EditAlbumInputModel model);
+
         Task AddPhotoAsync(string albumId, string photoId);
 
         Task RemovePhotoAsync(string albumId, string photoId);
 
-        Task DeleteAsync(string albumId);
+        Task DeleteAsync(string albumId, string userId);
 
         ICollection<T> GetUserAlbums<T>(string userId);
+
+        T GetById<T>(string albumId, string userId);
     }
 }

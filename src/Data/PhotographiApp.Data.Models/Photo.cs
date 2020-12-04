@@ -21,6 +21,8 @@
 
         public string Description { get; set; }
 
+        public string PublicId { get; set; }
+
         public string Href { get; set; }
 
         public string ThumbnailHref { get; set; }

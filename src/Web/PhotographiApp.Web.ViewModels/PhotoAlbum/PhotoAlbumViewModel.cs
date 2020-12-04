@@ -1,4 +1,4 @@
-﻿namespace PhotographiApp.Web.ViewModels.Photos
+﻿namespace PhotographiApp.Web.ViewModels.PhotoAlbum
 {
     using PhotographiApp.Data.Models;
     using PhotographiApp.Services.Mapping;
@@ -10,5 +10,13 @@
         public string AlbumName { get; set; }
 
         public string AlbumDescription { get; set; }
+
+        public string PhotoTitle { get; set; }
+
+        public string PhotoDescription { get; set; }
+
+        public string PhotoHref { get; set; }
+
+        public string PhotoThumbnailHref { get; set; }
     }
 }

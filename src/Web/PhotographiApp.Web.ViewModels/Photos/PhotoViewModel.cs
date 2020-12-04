@@ -7,6 +7,7 @@
     using PhotographiApp.Data.Models;
     using PhotographiApp.Services.Mapping;
     using PhotographiApp.Web.ViewModels.Comments;
+    using PhotographiApp.Web.ViewModels.PhotoAlbum;
 
     public class PhotoViewModel : IMapFrom<Photo>, IHaveCustomMappings
     {

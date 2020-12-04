@@ -1,0 +1,27 @@
+﻿@using PhotographiApp.Web.ViewModels.Albums;
+@model EditAlbumInputModel
+
+@{
+    this.ViewData["Title"] = $"Edit album {Model.Name}";
+}
+
+<form method="post" class="col-md-6 offset-md-3">
+    <h1>@this.ViewData["Title"]</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="IsPrivate"></label>
+        <input asp-for="IsPrivate" class="form-control" />
+        <span asp-validation-for="IsPrivate" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>

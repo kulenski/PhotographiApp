@@ -40,6 +40,21 @@
             await this.albumsRespository.SaveChangesAsync();
         }
 
+        public async Task UpdateAsync(string albumId, string userId, EditAlbumInputModel model)
+        {
+            var album = this.albumsRespository.All().Where(x => x.Id == albumId && x.OwnerId == userId).FirstOrDefault();
+            if (album == null)
+            {
+                throw new Exception("Album does not exist!");
+            }
+
+            album.Name = model.Name;
+            album.Description = model.Description;
+            album.IsPrivate = model.IsPrivate;
+
+            await this.albumsRespository.SaveChangesAsync();
+        }
+
         public async Task AddPhotoAsync(string albumId, string photoId)
         {
             var album = this.albumsRespository.All().Where(a => a.Id == albumId).FirstOrDefault();
@@ -100,9 +115,9 @@
             await this.photoAlbumRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string albumId)
+        public async Task DeleteAsync(string albumId, string userId)
         {
-            var album = this.albumsRespository.All().Where(x => x.Id == albumId).FirstOrDefault();
+            var album = this.albumsRespository.All().Where(x => x.Id == albumId && x.OwnerId == userId).FirstOrDefault();
 
             if (album == null)
             {
@@ -125,6 +140,18 @@
                 .AllAsNoTracking()
                 .Where(album => album.OwnerId == userId)
                 .To<T>().ToList();
+        }
+
+        public T GetById<T>(string albumId, string userId)
+        {
+            var album = this.albumsRespository.All().Where(x => x.Id == albumId && x.OwnerId == userId).To<T>().FirstOrDefault();
+
+            if (album == null)
+            {
+                throw new Exception("Album does not exist!");
+            }
+
+            return album;
         }
     }
 }

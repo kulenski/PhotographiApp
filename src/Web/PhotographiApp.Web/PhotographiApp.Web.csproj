@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.14.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.0" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
@@ -35,5 +36,9 @@
     <ProjectReference Include="..\..\Services\PhotographiApp.Services\PhotographiApp.Services.csproj" />
     <ProjectReference Include="..\PhotographiApp.Web.Infrastructure\PhotographiApp.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\PhotographiApp.Web.ViewModels\PhotographiApp.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Topic\" />
   </ItemGroup>
 </Project>

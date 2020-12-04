@@ -8,6 +8,7 @@
 
     using PhotographiApp.Data.Common.Repositories;
     using PhotographiApp.Data.Models;
+    using PhotographiApp.Services.Interfaces;
     using PhotographiApp.Services.Mapping;
     using PhotographiApp.Web.ViewModels.Photos;
 
@@ -15,10 +16,12 @@
     {
         private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif" };
         private readonly IDeletableEntityRepository<Photo> photoRespository;
+        private readonly IPhotoStorageService photoStorageService;
 
-        public PhotoService(IDeletableEntityRepository<Photo> photoRespository)
+        public PhotoService(IDeletableEntityRepository<Photo> photoRespository, IPhotoStorageService photoStorageService)
         {
             this.photoRespository = photoRespository;
+            this.photoStorageService = photoStorageService;
         }
 
         public async Task CreatePhotoAsync(string userId, string imagePath, CreatePhotoInputModel model)
@@ -33,19 +36,18 @@
                 OwnerId = userId,
             };
 
-            Directory.CreateDirectory($"{imagePath}/photos/");
-
             var extension = Path.GetExtension(model.File.FileName).TrimStart('.');
             if (!this.allowedExtensions.Any(x => extension.ToLower().EndsWith(x)))
             {
                 throw new Exception($"Invalid image extension {extension}");
             }
 
-            var physicalPath = $"{imagePath}/photos/{photo.Id}.{extension}";
-            photo.Href = $"/photos/{photo.Id}.{extension}";
+            var uploadResult = await this.photoStorageService.UploadImageAsync(model.File);
+            var publicId = uploadResult.PublicId;
 
-            using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
-            await model.File.CopyToAsync(fileStream);
+            photo.Href = this.photoStorageService.GetImageUrl(publicId);
+            photo.ThumbnailHref = this.photoStorageService.GetThumbnailUrl(publicId);
+            photo.PublicId = publicId;
 
             await this.photoRespository.AddAsync(photo);
             await this.photoRespository.SaveChangesAsync();
@@ -78,6 +80,7 @@
                 throw new Exception("Such photo does not exists!");
             }
 
+            await this.photoStorageService.DeleteImages(new[] { photo.PublicId });
             this.photoRespository.Delete(photo);
             await this.photoRespository.SaveChangesAsync();
         }

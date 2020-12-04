@@ -2,7 +2,6 @@
 @model PhotoViewModel
 @{
     ViewData["Title"] = Model.Title;
-    var imageHref = $"/images/{Model.Href}";
 }
 
 @if (Model.IsOwnerByCurrentUser)
@@ -23,7 +22,7 @@
 }
 
 <div class="row" style="margin-left: 0; margin-right:0">
-    <img src="@imageHref" class="img-fluid" alt="@Model.Title">
+    <img src="@Model.Href" class="img-fluid" alt="@Model.Title">
 </div>
 <div class="row" style="margin-left: 0; margin-right:0">
     <div class="col">
