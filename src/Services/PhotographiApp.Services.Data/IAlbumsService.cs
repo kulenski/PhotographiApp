@@ -11,10 +11,6 @@
 
         Task UpdateAsync(string albumId, string userId, EditAlbumInputModel model);
 
-        Task AddPhotoAsync(string albumId, string photoId);
-
-        Task RemovePhotoAsync(string albumId, string photoId);
-
         Task DeleteAsync(string albumId, string userId);
 
         ICollection<T> GetUserAlbums<T>(string userId, string currentUserId);

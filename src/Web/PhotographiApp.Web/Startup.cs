@@ -80,6 +80,7 @@
             services.AddTransient<IAlbumsService, AlbumsService>();
             services.AddTransient<ILicenseService, LicenseService>();
             services.AddTransient<IPhotoService, PhotoService>();
+            services.AddTransient<IPhotoAlbumService, PhotoAlbumService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

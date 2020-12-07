@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using PhotographiApp.Data.Models.Application;
     using PhotographiApp.Services.Data;
+    using PhotographiApp.Web.ViewModels.PhotoAlbum;
     using PhotographiApp.Web.ViewModels.Photos;
 
     [Authorize]
@@ -18,17 +19,20 @@
         private readonly UserManager<User> userManager;
         private readonly ILicenseService licenseService;
         private readonly IPhotoService photoService;
+        private readonly IPhotoAlbumService photoAlbumService;
 
         public PhotoController(
             IWebHostEnvironment hostingEnvironment,
             UserManager<User> userManager,
             ILicenseService licenseService,
-            IPhotoService photoService)
+            IPhotoService photoService,
+            IPhotoAlbumService photoAlbumService)
         {
             this.hostingEnvironment = hostingEnvironment;
             this.userManager = userManager;
             this.licenseService = licenseService;
             this.photoService = photoService;
+            this.photoAlbumService = photoAlbumService;
         }
 
         [HttpGet]
@@ -86,6 +90,7 @@
             }
 
             var model = this.photoService.GetById<PhotoViewModel>(id, userId);
+            var albums = this.photoAlbumService.GetAllByPhotoId<PhotoAlbumViewModel>(id);
             if (model == null)
             {
                 this.ViewData["Error"] = "Photo not found!";
@@ -100,6 +105,8 @@
             {
                 model.IsOwnerByCurrentUser = false;
             }
+
+            model.PhotoAlbums = albums;
 
             return this.View(model);
         }

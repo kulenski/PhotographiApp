@@ -15,7 +15,10 @@
                 <a asp-controller="Photo" asp-action="Delete" asp-route-id="@Model.Id" class="nav-link active">Delete</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Add to album</a>
+                <a asp-controller="PhotoAlbum" asp-action="Add" asp-route-id="@Model.Id" class="nav-link active">Add to album</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="PhotoAlbum" asp-action="Remove" asp-route-id="@Model.Id" class="nav-link active">Remove from album</a>
             </li>
         </ul>
     </div>
@@ -43,7 +46,13 @@
         }
     </div>
     <div class="col-md-6">
-        <h4>Albums</h4>
+        <h4><a asp-controller="Profile" asp-action="Albums" asp-route-id="@Model.Id">Albums</a></h4>
         <hr />
+        <ul class="list-group">
+            @foreach (var album in Model.PhotoAlbums)
+            {
+                <li class="list-group-item"><a asp-controller="Album" asp-action="Show" asp-route-id="@album.AlbumId">@album.AlbumName</a></li>
+            }
+        </ul>
     </div>
 </div>

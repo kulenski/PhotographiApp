@@ -1,0 +1,24 @@
+﻿@using PhotographiApp.Web.ViewModels.PhotoAlbum
+@model AddRemoveAlbumViewModel
+@{
+    ViewData["Title"] = "Remove photo from album";
+}
+
+<form method="post" class="col-md-6 offset-md-3">
+    <h4>@Model.PhotoTitle</h4>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input asp-for="PhotoId" hidden />
+    <div class="form-group">
+        <label asp-for="AlbumId"></label>
+        <select asp-for="AlbumId" class="form-control">
+            @foreach (var album in Model.Albums)
+            {
+                <option value="@album.Id">@album.Name</option>
+            }
+        </select>
+        <span asp-validation-for="AlbumId" class="text-danger"></span>
+    </div>
+
+
+    <input type="submit" class="btn btn-primary" />
+</form>

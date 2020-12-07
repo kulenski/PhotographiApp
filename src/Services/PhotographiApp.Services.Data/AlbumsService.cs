@@ -13,16 +13,13 @@
     public class AlbumsService : IAlbumsService
     {
         private readonly IDeletableEntityRepository<Album> albumsRespository;
-        private readonly IDeletableEntityRepository<Photo> photoRepository;
         private readonly IRepository<PhotoAlbum> photoAlbumRepository;
 
         public AlbumsService(
             IDeletableEntityRepository<Album> albumsRespository,
-            IDeletableEntityRepository<Photo> photoRepository,
             IRepository<PhotoAlbum> photoAlbumRepository)
         {
             this.albumsRespository = albumsRespository;
-            this.photoRepository = photoRepository;
             this.photoAlbumRepository = photoAlbumRepository;
         }
 
@@ -53,66 +50,6 @@
             album.IsPrivate = model.IsPrivate;
 
             await this.albumsRespository.SaveChangesAsync();
-        }
-
-        public async Task AddPhotoAsync(string albumId, string photoId)
-        {
-            var album = this.albumsRespository.All().Where(a => a.Id == albumId).FirstOrDefault();
-
-            if (album == null)
-            {
-                throw new Exception("Album does not exist!");
-            }
-
-            var photo = this.photoRepository.AllAsNoTracking().Where(p => p.Id == photoId).FirstOrDefault();
-
-            if (photo == null)
-            {
-                throw new Exception("Photo does not exist!");
-            }
-
-            var photoAlbum = this.photoAlbumRepository.All().Where(pa => pa.PhotoId == photoId && pa.AlbumId == albumId).FirstOrDefault();
-
-            if (photoAlbum != null)
-            {
-                throw new Exception("Photo is already added to the album!");
-            }
-
-            var newPhotoAlbum = new PhotoAlbum
-            {
-                Album = album,
-                Photo = photo,
-            };
-
-            await this.photoAlbumRepository.AddAsync(newPhotoAlbum);
-            await this.photoAlbumRepository.SaveChangesAsync();
-        }
-
-        public async Task RemovePhotoAsync(string albumId, string photoId)
-        {
-            var album = this.albumsRespository.All().Where(a => a.Id == albumId).FirstOrDefault();
-
-            if (album == null)
-            {
-                throw new Exception("Album does not exist!");
-            }
-
-            var photo = this.photoRepository.AllAsNoTracking().Where(p => p.Id == photoId).FirstOrDefault();
-
-            if (photo == null)
-            {
-                throw new Exception("Photo does not exist!");
-            }
-
-            var photoAlbum = this.photoAlbumRepository.All().Where(pa => pa.PhotoId == photoId && pa.AlbumId == albumId).FirstOrDefault();
-
-            if (photoAlbum == null)
-            {
-                throw new Exception("Such mapping between photo and album does not exist!");
-            }
-
-            this.photoAlbumRepository.Delete(photoAlbum);
-            await this.photoAlbumRepository.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(string albumId, string userId)
