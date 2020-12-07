@@ -1,5 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using PhotographiApp.Web.ViewModels.Albums
+@model AlbumViewModel
+
+@if (Model.IsOwnerByCurrentUser)
+{
+    <div class="row" style="margin-left: 0; margin-right:0">
+        <ul class="nav" style="background-color: #fafafa; width: 100%; border-bottom: 1px solid #cccccc;">
+            <li class="nav-item">
+                <a asp-controller="Album" asp-action="Edit" asp-route-id="@Model.Id" class="nav-link active">Edit</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Album" asp-action="Delete" asp-route-id="@Model.Id" class="nav-link active">Delete</a>
+            </li>
+        </ul>
+    </div>
 }
+
+<div class="row">
+    <div class="col-12">
+        <h2>@Model.Name</h2>
+        <h5>@Model.Description</h5>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        @foreach (var photo in Model.Photos)
+        {
+            <a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.PhotoId"><img src="@photo.PhotoThumbnailHref" width="100" height="100" alt="@photo.PhotoTitle" /></a>
+        }
+    </div>
+</div>

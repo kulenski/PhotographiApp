@@ -17,8 +17,10 @@
 
         Task DeleteAsync(string albumId, string userId);
 
-        ICollection<T> GetUserAlbums<T>(string userId);
+        ICollection<T> GetUserAlbums<T>(string userId, string currentUserId);
 
         T GetById<T>(string albumId, string userId);
+
+        ICollection<T> GetAlbumPhotos<T>(string albumId, string userId);
     }
 }

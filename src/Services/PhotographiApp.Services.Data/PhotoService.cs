@@ -87,28 +87,24 @@
 
         public T GetById<T>(string photoId, string userId)
         {
-            if (string.IsNullOrEmpty(userId))
-            {
-                var photo = this.photoRespository.AllAsNoTracking().Where(x => x.Id == photoId && x.IsPrivate == false)
-                .To<T>().FirstOrDefault();
+            var photo = this.photoRespository.AllAsNoTracking().Where(x => x.Id == photoId && (x.OwnerId == userId || x.IsPrivate == false))
+            .To<T>().FirstOrDefault();
 
-                return photo;
+            return photo;
+        }
+
+        public ICollection<T> GetAllByUserId<T>(string userId, string currentUserId)
+        {
+            if (userId == currentUserId)
+            {
+                return this.photoRespository.AllAsNoTracking().Where(x => x.OwnerId == userId)
+               .To<T>().ToList();
             }
             else
             {
-                var photo = this.photoRespository.AllAsNoTracking().Where(x => x.Id == photoId && x.OwnerId == userId)
-                .To<T>().FirstOrDefault();
-
-                return photo;
-            }
-        }
-
-        public ICollection<T> GetAllByUserId<T>(string userId)
-        {
-            var photos = this.photoRespository.AllAsNoTracking().Where(x => x.OwnerId == userId)
+                return this.photoRespository.AllAsNoTracking().Where(x => x.OwnerId == userId && x.IsPrivate == false)
                .To<T>().ToList();
-
-            return photos;
+            }
         }
 
         public ICollection<T> GetLatestPublic<T>()

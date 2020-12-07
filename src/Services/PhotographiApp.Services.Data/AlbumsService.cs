@@ -134,17 +134,29 @@
             await this.albumsRespository.SaveChangesAsync();
         }
 
-        public ICollection<T> GetUserAlbums<T>(string userId)
+        public ICollection<T> GetUserAlbums<T>(string userId, string currentUserId)
         {
-            return this.albumsRespository
-                .AllAsNoTracking()
-                .Where(album => album.OwnerId == userId)
-                .To<T>().ToList();
+            if (userId == currentUserId)
+            {
+                return this.albumsRespository
+               .AllAsNoTracking()
+               .Where(album => album.OwnerId == userId)
+               .To<T>().ToList();
+            }
+            else
+            {
+                return this.albumsRespository
+               .AllAsNoTracking()
+               .Where(album => album.OwnerId == userId && album.IsPrivate == false)
+               .To<T>().ToList();
+            }
         }
 
         public T GetById<T>(string albumId, string userId)
         {
-            var album = this.albumsRespository.All().Where(x => x.Id == albumId && x.OwnerId == userId).To<T>().FirstOrDefault();
+            var album = this.albumsRespository.All()
+                .Where(x => (x.Id == albumId && (x.OwnerId == userId || x.IsPrivate == false)))
+                .To<T>().FirstOrDefault();
 
             if (album == null)
             {
@@ -152,6 +164,37 @@
             }
 
             return album;
+        }
+
+        public ICollection<T> GetAlbumPhotos<T>(string albumId, string userId)
+        {
+            var album = this.albumsRespository.All()
+                .Where(x => (x.Id == albumId && (x.OwnerId == userId || x.IsPrivate == false)))
+                .FirstOrDefault();
+
+            bool isAlbumOwnedByCurrentUser = userId == album.OwnerId;
+
+            if (album == null)
+            {
+                throw new Exception("Album does not exist!");
+            }
+
+            if (isAlbumOwnedByCurrentUser)
+            {
+                return this.photoAlbumRepository
+                .AllAsNoTracking()
+                .Where(x => x.AlbumId == albumId)
+                .To<T>()
+                .ToList();
+            }
+            else
+            {
+                return this.photoAlbumRepository
+                .AllAsNoTracking()
+                .Where(x => x.AlbumId == albumId && x.Photo.IsPrivate == false)
+                .To<T>()
+                .ToList();
+            }
         }
     }
 }

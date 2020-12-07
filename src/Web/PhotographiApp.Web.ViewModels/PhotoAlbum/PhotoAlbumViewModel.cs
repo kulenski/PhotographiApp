@@ -11,6 +11,8 @@
 
         public string AlbumDescription { get; set; }
 
+        public string PhotoId { get; set; }
+
         public string PhotoTitle { get; set; }
 
         public string PhotoDescription { get; set; }

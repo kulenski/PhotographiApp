@@ -9,6 +9,7 @@
     using PhotographiApp.Data.Models.Application;
     using PhotographiApp.Services.Data;
     using PhotographiApp.Web.ViewModels.Albums;
+    using PhotographiApp.Web.ViewModels.PhotoAlbum;
 
     [Authorize]
     public class AlbumController : BaseController
@@ -51,9 +52,27 @@
             return this.View("CreateSuccessful");
         }
 
-        public IActionResult Show(string id)
+        public async Task<IActionResult> Show(string id)
         {
-            return this.View();
+            var user = await this.userManager.GetUserAsync(this.User);
+            var model = this.albumsService.GetById<AlbumViewModel>(id, user.Id);
+
+            if (model == null)
+            {
+                this.ViewData["Error"] = "Album not found!";
+                return this.View("AlbumLoadingError");
+            }
+
+            var photos = this.albumsService.GetAlbumPhotos<PhotoAlbumViewModel>(id, user.Id);
+
+            model.Photos = photos;
+
+            if (model.OwnerId == user.Id)
+            {
+                model.IsOwnerByCurrentUser = true;
+            }
+
+            return this.View(model);
         }
 
         [HttpGet]

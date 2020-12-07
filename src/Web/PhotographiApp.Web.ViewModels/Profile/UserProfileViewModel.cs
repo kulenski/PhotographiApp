@@ -8,6 +8,8 @@
 
     public class UserProfileViewModel
     {
+        public string Id { get; set; }
+
         public string UserName { get; set; }
 
         public DateTime CreatedOn { get; set; }
