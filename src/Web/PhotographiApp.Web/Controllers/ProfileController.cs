@@ -35,7 +35,8 @@
             var currentUser = this.userManager.GetUserId(this.User);
             if (user == null)
             {
-                return this.View("NotFound");
+                this.ViewData["Error"] = "User does not exist!";
+                return this.View("ValidationError");
             }
 
             var photos = this.photoService.GetAllByUserId<PhotoViewModel>(user.Id, currentUser);

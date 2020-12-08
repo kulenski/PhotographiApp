@@ -7,7 +7,11 @@
 
     public class CommentViewModel : IMapFrom<Comment>
     {
+        public string PhotoId { get; set; }
+
         public string UserId { get; set; }
+
+        public string UserUserName { get; set; }
 
         public string Value { get; set; }
 

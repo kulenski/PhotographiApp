@@ -21,7 +21,6 @@
         private readonly IPhotoService photoService;
         private readonly IPhotoAlbumService photoAlbumService;
         private readonly IFavoritesService favoritesService;
-        private readonly ICommentService commentService;
 
         public PhotoController(
             IWebHostEnvironment hostingEnvironment,
@@ -29,8 +28,7 @@
             ILicenseService licenseService,
             IPhotoService photoService,
             IPhotoAlbumService photoAlbumService,
-            IFavoritesService favoritesService,
-            ICommentService commentService)
+            IFavoritesService favoritesService)
         {
             this.hostingEnvironment = hostingEnvironment;
             this.userManager = userManager;
@@ -38,7 +36,6 @@
             this.photoService = photoService;
             this.photoAlbumService = photoAlbumService;
             this.favoritesService = favoritesService;
-            this.commentService = commentService;
         }
 
         [HttpGet]
@@ -99,7 +96,7 @@
             if (model == null)
             {
                 this.ViewData["Error"] = "Photo not found!";
-                return this.View("PhotoLoadingError");
+                return this.View("ValidationError");
             }
 
             var albums = this.photoAlbumService.GetAllByPhotoId<PhotoAlbumViewModel>(id);
@@ -135,7 +132,7 @@
             if (model == null)
             {
                 this.ViewData["Error"] = "Photo not found!";
-                return this.View("PhotoLoadingError");
+                return this.View("ValidationError");
             }
 
             var licenses = this.licenseService.GetAll();
@@ -189,7 +186,7 @@
             catch (Exception ex)
             {
                 this.ViewData["Error"] = ex.Message;
-                return this.View("PhotoLoadingError");
+                return this.View("ValidationError");
             }
         }
     }

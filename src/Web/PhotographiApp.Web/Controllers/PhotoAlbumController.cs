@@ -104,7 +104,7 @@
                 return this.View("Error");
             }
 
-            return this.RedirectToAction("Show", "Photo", model.PhotoId);
+            return this.RedirectToAction("Show", "Photo", new { Id = model.PhotoId });
         }
     }
 }

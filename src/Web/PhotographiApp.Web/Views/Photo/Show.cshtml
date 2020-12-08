@@ -42,7 +42,7 @@
         <br />
         @if (Model.IsCommentAllowed && User.Identity.IsAuthenticated)
         {
-            <button class="btn btn-primary">Add comment</button>
+        <a asp-controller="Comments" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary">Add comment</a>
         }
     </div>
     <div class="col-md-6">

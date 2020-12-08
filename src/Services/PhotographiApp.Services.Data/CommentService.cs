@@ -23,7 +23,7 @@
 
         public async Task AddAsync(string photoId, string userId, string comment)
         {
-            var photo = this.photoRepository.AllAsNoTracking().Where(x => x.Id == photoId && x.OwnerId == userId).FirstOrDefault();
+            var photo = this.photoRepository.AllAsNoTracking().Where(x => x.Id == photoId).FirstOrDefault();
             if (photo == null)
             {
                 throw new Exception("Photo does not exists!");

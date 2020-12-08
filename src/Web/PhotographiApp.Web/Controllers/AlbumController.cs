@@ -60,7 +60,7 @@
             if (model == null)
             {
                 this.ViewData["Error"] = "Album not found!";
-                return this.View("AlbumLoadingError");
+                return this.View("ValidationError");
             }
 
             var photos = this.albumsService.GetAlbumPhotos<PhotoAlbumViewModel>(id, user.Id);
@@ -90,7 +90,7 @@
             if (album == null)
             {
                 this.ViewData["Error"] = "Album not found!";
-                return this.View("AlbumLoadingError");
+                return this.View("ValidationError");
             }
 
             return this.View(album);
@@ -136,7 +136,7 @@
             catch (Exception ex)
             {
                 this.ViewData["Error"] = ex.Message;
-                return this.View("AlbumLoadingError");
+                return this.View("ValidationError");
             }
         }
     }

@@ -9,7 +9,7 @@ else
 {
     foreach(var comment in Model)
     {
-        <h5>(@comment.UserId) @comment.Value</h5>
+        <p>(@comment.UserUserName / @comment.CreatedOn.ToString("ddd MMM yyyy, hh:mm") @comment.Value</p>
         <hr/>
     }
 }

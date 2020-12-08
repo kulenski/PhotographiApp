@@ -96,11 +96,6 @@
                 .Where(x => (x.Id == albumId && (x.OwnerId == userId || x.IsPrivate == false)))
                 .To<T>().FirstOrDefault();
 
-            if (album == null)
-            {
-                throw new Exception("Album does not exist!");
-            }
-
             return album;
         }
 
