@@ -1,7 +1,7 @@
 ﻿namespace PhotographiApp.Web.Areas.Administration.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using PhotographiApp.Services.Data;
+    using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Web.ViewModels.Administration.Dashboard;
 
     public class DashboardController : AdministrationController

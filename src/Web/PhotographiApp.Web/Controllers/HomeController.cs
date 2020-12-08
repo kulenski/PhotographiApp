@@ -3,7 +3,7 @@
     using System.Diagnostics;
 
     using Microsoft.AspNetCore.Mvc;
-    using PhotographiApp.Services.Data;
+    using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Web.ViewModels;
     using PhotographiApp.Web.ViewModels.Photos;
 

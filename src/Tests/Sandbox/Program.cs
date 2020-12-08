@@ -17,6 +17,7 @@
     using PhotographiApp.Data.Repositories;
     using PhotographiApp.Data.Seeding;
     using PhotographiApp.Services.Data;
+    using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Services.Messaging;
 
     public static class Program

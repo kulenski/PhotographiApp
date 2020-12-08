@@ -19,6 +19,7 @@
     using PhotographiApp.Data.Seeding;
     using PhotographiApp.Services;
     using PhotographiApp.Services.Data;
+    using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Services.Interfaces;
     using PhotographiApp.Services.Mapping;
     using PhotographiApp.Services.Messaging;
@@ -81,6 +82,8 @@
             services.AddTransient<ILicenseService, LicenseService>();
             services.AddTransient<IPhotoService, PhotoService>();
             services.AddTransient<IPhotoAlbumService, PhotoAlbumService>();
+            services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IFavoritesService, FavoritesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

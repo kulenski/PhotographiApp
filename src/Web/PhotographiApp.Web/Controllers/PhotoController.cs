@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using PhotographiApp.Data.Models.Application;
-    using PhotographiApp.Services.Data;
+    using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Web.ViewModels.PhotoAlbum;
     using PhotographiApp.Web.ViewModels.Photos;
 
@@ -20,19 +20,25 @@
         private readonly ILicenseService licenseService;
         private readonly IPhotoService photoService;
         private readonly IPhotoAlbumService photoAlbumService;
+        private readonly IFavoritesService favoritesService;
+        private readonly ICommentService commentService;
 
         public PhotoController(
             IWebHostEnvironment hostingEnvironment,
             UserManager<User> userManager,
             ILicenseService licenseService,
             IPhotoService photoService,
-            IPhotoAlbumService photoAlbumService)
+            IPhotoAlbumService photoAlbumService,
+            IFavoritesService favoritesService,
+            ICommentService commentService)
         {
             this.hostingEnvironment = hostingEnvironment;
             this.userManager = userManager;
             this.licenseService = licenseService;
             this.photoService = photoService;
             this.photoAlbumService = photoAlbumService;
+            this.favoritesService = favoritesService;
+            this.commentService = commentService;
         }
 
         [HttpGet]
@@ -90,12 +96,14 @@
             }
 
             var model = this.photoService.GetById<PhotoViewModel>(id, userId);
-            var albums = this.photoAlbumService.GetAllByPhotoId<PhotoAlbumViewModel>(id);
             if (model == null)
             {
                 this.ViewData["Error"] = "Photo not found!";
                 return this.View("PhotoLoadingError");
             }
+
+            var albums = this.photoAlbumService.GetAllByPhotoId<PhotoAlbumViewModel>(id);
+            bool isUserFavorite = this.favoritesService.UserHasFavoritePhoto(id, userId);
 
             if (model.OwnerId == userId)
             {
@@ -107,6 +115,7 @@
             }
 
             model.PhotoAlbums = albums;
+            model.IsUserFavorite = isUserFavorite;
 
             return this.View(model);
         }

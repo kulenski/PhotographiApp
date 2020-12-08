@@ -1,4 +1,4 @@
-﻿namespace PhotographiApp.Services.Data
+﻿namespace PhotographiApp.Services.Data.Interfaces
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

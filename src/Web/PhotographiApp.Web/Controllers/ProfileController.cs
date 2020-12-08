@@ -1,13 +1,12 @@
 ﻿namespace PhotographiApp.Web.Controllers
 {
     using System.Linq;
-    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using PhotographiApp.Data.Models.Application;
-    using PhotographiApp.Services.Data;
+    using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Web.ViewModels.Albums;
     using PhotographiApp.Web.ViewModels.Photos;
     using PhotographiApp.Web.ViewModels.Profile;

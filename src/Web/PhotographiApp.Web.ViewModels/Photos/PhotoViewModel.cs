@@ -14,6 +14,7 @@
         public PhotoViewModel()
         {
             this.IsOwnerByCurrentUser = false;
+            this.IsUserFavorite = false;
         }
 
         public string Id { get; set; }
@@ -51,6 +52,8 @@
         public int FavoritesCount { get; set; }
 
         public bool IsOwnerByCurrentUser { get; set; }
+
+        public bool IsUserFavorite { get; set; }
 
         public IEnumerable<PhotoAlbumViewModel> PhotoAlbums { get; set; }
 

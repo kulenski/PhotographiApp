@@ -3,7 +3,6 @@
     using System.Collections.Generic;
 
     using PhotographiApp.Web.ViewModels.Albums;
-    using PhotographiApp.Web.ViewModels.Photos;
 
     public class AddRemoveAlbumViewModel
     {

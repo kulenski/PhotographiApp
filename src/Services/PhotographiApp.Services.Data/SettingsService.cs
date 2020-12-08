@@ -5,6 +5,7 @@
 
     using PhotographiApp.Data.Common.Repositories;
     using PhotographiApp.Data.Models;
+    using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Services.Mapping;
 
     public class SettingsService : ISettingsService

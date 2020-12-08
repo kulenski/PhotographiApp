@@ -1,0 +1,54 @@
+﻿namespace PhotographiApp.Services.Data
+{
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using PhotographiApp.Data.Common.Repositories;
+    using PhotographiApp.Data.Models;
+    using PhotographiApp.Services.Data.Interfaces;
+
+    public class FavoritesService : IFavoritesService
+    {
+        private readonly IRepository<PhotoFavorite> favoritesRepository;
+        private readonly IDeletableEntityRepository<Photo> photoRepository;
+
+        public FavoritesService(
+            IRepository<PhotoFavorite> favoritesRepository,
+            IDeletableEntityRepository<Photo> photoRepository)
+        {
+            this.favoritesRepository = favoritesRepository;
+            this.photoRepository = photoRepository;
+        }
+
+        public async Task ToggleAsync(string photoId, string userId)
+        {
+            var photo = this.photoRepository.AllAsNoTracking().Where(x => x.Id == photoId).FirstOrDefault();
+            if (photo == null)
+            {
+                throw new Exception("Photo does not exist!");
+            }
+
+            var favorite = this.favoritesRepository.AllAsNoTracking().Where(x => x.PhotoId == photoId && x.UserId == userId).FirstOrDefault();
+
+            if (favorite == null)
+            {
+                if (photo.OwnerId != userId)
+                {
+                    await this.favoritesRepository.AddAsync(new PhotoFavorite() { PhotoId = photoId, UserId = userId });
+                    await this.favoritesRepository.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                this.favoritesRepository.Delete(favorite);
+                await this.favoritesRepository.SaveChangesAsync();
+            }
+        }
+
+        public bool UserHasFavoritePhoto(string photoId, string userId)
+        {
+            return this.favoritesRepository.AllAsNoTracking().Where(x => x.PhotoId == photoId && x.UserId == userId).Any();
+        }
+    }
+}

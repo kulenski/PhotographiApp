@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using PhotographiApp.Data.Models.Application;
-    using PhotographiApp.Services.Data;
+    using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Web.ViewModels.Albums;
     using PhotographiApp.Web.ViewModels.PhotoAlbum;
 

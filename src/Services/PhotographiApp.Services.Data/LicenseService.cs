@@ -5,6 +5,7 @@
 
     using PhotographiApp.Data.Common.Repositories;
     using PhotographiApp.Data.Models;
+    using PhotographiApp.Services.Data.Interfaces;
 
     public class LicenseService : ILicenseService
     {
