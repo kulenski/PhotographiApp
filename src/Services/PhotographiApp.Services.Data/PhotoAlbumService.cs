@@ -89,7 +89,6 @@
         {
             var usedAlbumIds = this.photoAlbumRepository.AllAsNoTracking().Where(x => x.PhotoId == photoId && x.Photo.OwnerId == userId).Select(x => x.AlbumId).ToList();
             var query = this.albumsRespository.AllAsNoTracking().Where(x => x.OwnerId == userId);
-
             if (usedAlbumIds.Count > 0)
             {
                 foreach (var albumId in usedAlbumIds)
@@ -104,21 +103,25 @@
         public ICollection<T> GetAllUsedAlbums<T>(string photoId, string userId)
         {
             var usedAlbumIds = this.photoAlbumRepository.AllAsNoTracking().Where(x => x.PhotoId == photoId && x.Photo.OwnerId == userId).Select(x => x.AlbumId).ToList();
-            var query = this.albumsRespository.AllAsNoTracking().Where(x => x.OwnerId == userId);
+            var albums = this.albumsRespository.AllAsNoTracking().Where(x => x.OwnerId == userId).ToList();
+            var result = new List<T>();
 
             if (usedAlbumIds.Count > 0)
             {
+                var foundAlbums = new List<Album>();
                 foreach (var albumId in usedAlbumIds)
                 {
-                    query = query.Where(x => x.Id == albumId);
+                    var foundAlbum = albums.Where(x => x.Id == albumId).FirstOrDefault();
+                    if (foundAlbum != null)
+                    {
+                        foundAlbums.Add(foundAlbum);
+                    }
                 }
 
-                return query.To<T>().ToList();
+                return foundAlbums.AsQueryable().To<T>().ToList();
             }
-            else
-            {
-                return new List<T>();
-            }
+
+            return result;
         }
 
         public ICollection<T> GetAllByPhotoId<T>(string photoId)

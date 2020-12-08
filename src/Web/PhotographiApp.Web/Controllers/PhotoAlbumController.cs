@@ -34,7 +34,7 @@
         {
             var userId = this.userManager.GetUserId(this.User);
             var photo = this.photoService.GetById<PhotoViewModel>(id, userId);
-            var albums = this.photoAlbumService.GetAllUnusedAlbums<AlbumViewModel>(userId, userId);
+            var albums = this.photoAlbumService.GetAllUnusedAlbums<AlbumViewModel>(id, userId);
 
             if (photo == null)
             {

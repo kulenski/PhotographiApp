@@ -17,11 +17,16 @@
         private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif" };
         private readonly IDeletableEntityRepository<Photo> photoRespository;
         private readonly IPhotoStorageService photoStorageService;
+        private readonly IRepository<PhotoAlbum> photoAlbumRepository;
 
-        public PhotoService(IDeletableEntityRepository<Photo> photoRespository, IPhotoStorageService photoStorageService)
+        public PhotoService(
+            IDeletableEntityRepository<Photo> photoRespository,
+            IPhotoStorageService photoStorageService,
+            IRepository<PhotoAlbum> photoAlbumRepository)
         {
             this.photoRespository = photoRespository;
             this.photoStorageService = photoStorageService;
+            this.photoAlbumRepository = photoAlbumRepository;
         }
 
         public async Task CreatePhotoAsync(string userId, string imagePath, CreatePhotoInputModel model)
@@ -80,9 +85,16 @@
                 throw new Exception("Such photo does not exists!");
             }
 
+            var photoAlbums = this.photoAlbumRepository.All().Where(x => x.PhotoId == photoId).ToList();
             await this.photoStorageService.DeleteImages(new[] { photo.PublicId });
+            foreach (var photoAlbum in photoAlbums)
+            {
+                this.photoAlbumRepository.Delete(photoAlbum);
+            }
+
             this.photoRespository.Delete(photo);
             await this.photoRespository.SaveChangesAsync();
+            await this.photoAlbumRepository.SaveChangesAsync();
         }
 
         public T GetById<T>(string photoId, string userId)
