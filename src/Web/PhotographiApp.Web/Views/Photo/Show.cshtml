@@ -4,10 +4,13 @@
     ViewData["Title"] = Model.Title;
 }
 
-@if (Model.IsOwnerByCurrentUser)
-{
-    <div class="row" style="margin-left: 0; margin-right:0">
-        <ul class="nav" style="background-color: #fafafa; width: 100%; border-bottom: 1px solid #cccccc;">
+<div class="row" style="margin-left: 0; margin-right:0">
+    <img src="@Model.Href" class="img-fluid" alt="@Model.Title">
+</div>
+<div class="row" style="margin-left: 0; margin-right:0">
+    <ul class="nav" style="background-color: #fafafa; width: 100%;  border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc;">
+        @if (Model.IsOwnerByCurrentUser)
+        {
             <li class="nav-item">
                 <a asp-controller="Photo" asp-action="Edit" asp-route-id="@Model.Id" class="nav-link active">Edit</a>
             </li>
@@ -20,12 +23,21 @@
             <li class="nav-item">
                 <a asp-controller="PhotoAlbum" asp-action="Remove" asp-route-id="@Model.Id" class="nav-link active">Remove from album</a>
             </li>
-        </ul>
-    </div>
-}
+        }
+        else if (User.Identity.IsAuthenticated && Model.IsUserFavorite == false)
+        {
+            <li class="nav-item">
+                <a asp-controller="PhotoFavorite" asp-action="Make" asp-route-id="@Model.Id" class="nav-link active">Make favorite</a>
+            </li>
+        }
+        else if (User.Identity.IsAuthenticated && Model.IsUserFavorite == true)
+        {
+            <li class="nav-item">
+                <a asp-controller="PhotoFavorite" asp-action="Make" asp-route-id="@Model.Id" class="nav-link active">Remove favorite</a>
+            </li>
+        }
 
-<div class="row" style="margin-left: 0; margin-right:0">
-    <img src="@Model.Href" class="img-fluid" alt="@Model.Title">
+    </ul>
 </div>
 <div class="row" style="margin-left: 0; margin-right:0">
     <div class="col">
@@ -46,7 +58,7 @@
         }
     </div>
     <div class="col-md-6">
-        <h4><a asp-controller="Profile" asp-action="Albums" asp-route-id="@Model.Id">Albums</a></h4>
+        <h4>Albums</h4>
         <hr />
         <ul class="list-group">
             @foreach (var album in Model.PhotoAlbums)

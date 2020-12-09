@@ -6,14 +6,14 @@
 
 <div class="row">
     <div class="col-12">
-        <h1>@Model.UserName</h1>
+        <h4>@Model.UserName</h4>
         <hr />
     </div>
 </div>
 
 <div class="row">
     <div class="col-9">
-        <h4><a asp-controller="Profile" asp-action="Photos" asp-route-id="@Model.Id">Photos</a></h4>
+        <h4>Photos</h4>
         <hr />
         @foreach (var photo in Model.Photos)
         {
@@ -21,7 +21,7 @@
         }
     </div>
     <div class="col-3">
-        <h4><a asp-controller="Profile" asp-action="Albums" asp-route-id="@Model.Id">Albums</a></h4>
+        <h4>Albums</h4>
         <hr />
         <ul class="list-group">
             @foreach (var album in Model.Albums)
@@ -30,7 +30,12 @@
             }
         </ul>
     </div>
-    <div class="col-12">
-        <h4><a asp-controller="Profile" asp-action="Favorites" asp-route-id="@Model.Id">Favorites</a></h4>
+    <div class="col-9">
+        <h4>Favorites</h4>
+        <hr />
+        @foreach (var photo in Model.FavoritePhotos)
+        {
+            <a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.Id"><img src="@photo.ThumbnailHref" width="100" height="100" alt="@photo.Title" /></a>
+        }
     </div>
 </div>

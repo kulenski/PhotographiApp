@@ -16,15 +16,18 @@
     {
         private readonly IAlbumsService albumsService;
         private readonly IPhotoService photoService;
+        private readonly IFavoritesService favoritesService;
         private readonly UserManager<User> userManager;
 
         public ProfileController(
             IAlbumsService albumsService,
             IPhotoService photoService,
+            IFavoritesService favoritesService,
             UserManager<User> userManager)
         {
             this.albumsService = albumsService;
             this.photoService = photoService;
+            this.favoritesService = favoritesService;
             this.userManager = userManager;
         }
 
@@ -41,9 +44,11 @@
 
             var photos = this.photoService.GetAllByUserId<PhotoViewModel>(user.Id, currentUser);
             var albums = this.albumsService.GetUserAlbums<AlbumViewModel>(user.Id, currentUser);
+            var favoritePhotos = this.favoritesService.GetUserFavoritePhotos<PhotoViewModel>(user.Id);
 
             viewModel.Albums = albums;
             viewModel.Photos = photos;
+            viewModel.FavoritePhotos = favoritePhotos;
             viewModel.UserName = user.UserName;
             viewModel.CreatedOn = user.CreatedOn;
             viewModel.Id = user.Id;

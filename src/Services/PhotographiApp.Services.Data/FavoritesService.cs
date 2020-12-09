@@ -1,12 +1,14 @@
 ﻿namespace PhotographiApp.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using PhotographiApp.Data.Common.Repositories;
     using PhotographiApp.Data.Models;
     using PhotographiApp.Services.Data.Interfaces;
+    using PhotographiApp.Services.Mapping;
 
     public class FavoritesService : IFavoritesService
     {
@@ -19,6 +21,16 @@
         {
             this.favoritesRepository = favoritesRepository;
             this.photoRepository = photoRepository;
+        }
+
+        public ICollection<T> GetUserFavoritePhotos<T>(string userId)
+        {
+            return this.favoritesRepository
+                .AllAsNoTracking()
+                .Where(x => x.UserId == userId && x.Photo.IsPrivate == false)
+                .Select(x => x.Photo)
+                .To<T>()
+                .ToList();
         }
 
         public async Task ToggleAsync(string photoId, string userId)

@@ -17,5 +17,7 @@
         public ICollection<PhotoViewModel> Photos { get; set; }
 
         public ICollection<AlbumViewModel> Albums { get; set; }
+
+        public ICollection<PhotoViewModel> FavoritePhotos { get; set; }
     }
 }
