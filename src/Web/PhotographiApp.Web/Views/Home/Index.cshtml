@@ -1,19 +1,26 @@
-﻿@using PhotographiApp.Web.ViewModels.Photos
-@model ICollection<PhotoViewModel>
+﻿@using PhotographiApp.Web.ViewModels.Home
+@model IndexViewModel
 @{
     this.ViewData["Title"] = "Welcome to Photographi";
 }
+
 <div class="row">
     <div class="col-12">
         <h1>Latest uploads</h1>
     </div>
-    
-</div>
-<div class="row">
     <div class="col-12">
-        @foreach (var photo in Model)
+        @foreach (var photo in Model.LatestPhotos)
         {
             <a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.Id"><img src="@photo.ThumbnailHref" alt="@photo.Title" /></a>
+        }
+    </div>
+    <div class="col-12">
+        <h1>Latest topics</h1>
+    </div>
+    <div class="col-12">
+        @foreach (var topic in Model.LatestTopics)
+        {
+            <h5><a asp-controller="Topic" asp-action="Show" asp-route-id="@topic.Id">@topic.Title</a></h5>
         }
     </div>
 </div>

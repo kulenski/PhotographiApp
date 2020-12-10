@@ -1,0 +1,17 @@
+﻿@using PhotographiApp.Web.ViewModels.TopicReply
+@model AddTopicReplyViewModel
+@{
+    ViewData["Title"] = "Add reply";
+}
+
+<form method="post" class="col-md-6 offset-md-3">
+    <h1>@this.ViewData["Title"]</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input asp-for="TopicId" hidden />
+    <div class="form-group">
+        <label>Enter reply</label>
+        <textarea asp-for="Value" class="form-control"></textarea>
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>

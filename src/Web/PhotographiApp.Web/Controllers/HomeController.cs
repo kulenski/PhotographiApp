@@ -5,21 +5,34 @@
     using Microsoft.AspNetCore.Mvc;
     using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Web.ViewModels;
+    using PhotographiApp.Web.ViewModels.Home;
     using PhotographiApp.Web.ViewModels.Photos;
+    using PhotographiApp.Web.ViewModels.Topic;
 
     public class HomeController : BaseController
     {
         private readonly IPhotoService photoService;
+        private readonly ITopicService topicService;
 
-        public HomeController(IPhotoService photoService)
+        public HomeController(
+            IPhotoService photoService,
+            ITopicService topicService)
         {
             this.photoService = photoService;
+            this.topicService = topicService;
         }
 
         public IActionResult Index()
         {
             var latestPhotos = this.photoService.GetLatestPublic<PhotoViewModel>();
-            return this.View(latestPhotos);
+            var latestTopics = this.topicService.GetLatest<TopicViewModel>();
+            var viewModel = new IndexViewModel()
+            {
+                LatestPhotos = latestPhotos,
+                LatestTopics = latestTopics,
+            };
+
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()

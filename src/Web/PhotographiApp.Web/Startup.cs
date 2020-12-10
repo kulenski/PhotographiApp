@@ -84,6 +84,8 @@
             services.AddTransient<IPhotoAlbumService, PhotoAlbumService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IFavoritesService, FavoritesService>();
+            services.AddTransient<ITopicReplyService, TopicReplyService>();
+            services.AddTransient<ITopicService, TopicService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

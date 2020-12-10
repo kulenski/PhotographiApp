@@ -1,0 +1,12 @@
+﻿@using PhotographiApp.Web.ViewModels.TopicReply
+@model ICollection<TopicReplyViewModel>
+
+@foreach (var reply in Model)
+{
+    <div class="card">
+        <div class="card-header">
+            <a asp-controller="Profile" asp-action="Show" asp-route-id="@reply.UserId">@reply.UserUserName</a> commented on @reply.CreatedOn.ToString("ddd MMM yyyy, hh:mm")
+        </div>
+        <div class="card-body">@reply.Value</div>
+    </div>
+} 

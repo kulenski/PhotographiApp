@@ -26,12 +26,20 @@
         <ul class="list-group">
             @foreach (var album in Model.Albums)
             {
-            <li class="list-group-item"><a asp-controller="Album" asp-action="Show" asp-route-id="@album.Id">@album.Name</a></li>
+                <li class="list-group-item"><a asp-controller="Album" asp-action="Show" asp-route-id="@album.Id">@album.Name</a></li>
             }
         </ul>
     </div>
     <div class="col-9">
         <h4>Favorites</h4>
+        <hr />
+        @foreach (var photo in Model.FavoritePhotos)
+        {
+            <a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.Id"><img src="@photo.ThumbnailHref" width="100" height="100" alt="@photo.Title" /></a>
+        }
+    </div>
+    <div class="col-9">
+        <h4>Topics</h4>
         <hr />
         @foreach (var photo in Model.FavoritePhotos)
         {

@@ -37,8 +37,4 @@
     <ProjectReference Include="..\PhotographiApp.Web.Infrastructure\PhotographiApp.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\PhotographiApp.Web.ViewModels\PhotographiApp.Web.ViewModels.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Topic\" />
-  </ItemGroup>
 </Project>

@@ -35,19 +35,20 @@
 
         public async Task ToggleAsync(string photoId, string userId)
         {
-            var photo = this.photoRepository.AllAsNoTracking().Where(x => x.Id == photoId).FirstOrDefault();
+            var photo = this.photoRepository.All().Where(x => x.Id == photoId).FirstOrDefault();
             if (photo == null)
             {
                 throw new Exception("Photo does not exist!");
             }
 
-            var favorite = this.favoritesRepository.AllAsNoTracking().Where(x => x.PhotoId == photoId && x.UserId == userId).FirstOrDefault();
+            var favorite = this.favoritesRepository.All().Where(x => x.PhotoId == photoId && x.UserId == userId).FirstOrDefault();
 
             if (favorite == null)
             {
                 if (photo.OwnerId != userId)
                 {
-                    await this.favoritesRepository.AddAsync(new PhotoFavorite() { PhotoId = photoId, UserId = userId });
+                    var entity = new PhotoFavorite() { Photo = photo, UserId = userId };
+                    await this.favoritesRepository.AddAsync(entity);
                     await this.favoritesRepository.SaveChangesAsync();
                 }
             }

@@ -1,0 +1,33 @@
+﻿@using PhotographiApp.Web.ViewModels.Topic
+@model TopicViewModel
+@{ 
+    ViewData["Title"] = $"Topic - {Model.Title}";
+}
+
+<div class="row">
+
+    <div class="col-12">
+        @if (Model.IsOwnedByCurrentUser)
+        {
+            <ul class="nav" style="background-color: #fafafa; width: 100%;  border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc;">
+
+                <li class="nav-item">
+                    <a asp-controller="Topic" asp-action="Edit" asp-route-id="@Model.Id" class="nav-link active">Edit</a>
+                </li>
+            </ul>
+        }
+        <div class="card">
+            <div class="card-header">@Model.Title</div>
+            <div class="card-body">@Model.Content</div>
+            <div class="card-footer">@Model.CreatedOn.ToString("ddd MMM yyyy, hh:mm") by <a asp-controller="Profile" asp-action="Show" asp-route-id="@Model.OwnerId">@Model.OwnerUserName</a></div>
+        </div>
+    </div>
+    <div class="col-12" style="padding-left:30px;">
+        <hr />
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="TopicReply" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary">Add reply</a>
+        }
+        <partial name="~/Views/TopicReply/TopicRepliesPartial.cshtml" model="Model.Replies" />
+    </div>
+</div>
