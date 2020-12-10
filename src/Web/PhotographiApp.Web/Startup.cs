@@ -74,9 +74,6 @@
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IPhotoValidationService, PhotoValidationService>();
-            services.AddTransient<IPhotoMetadataReaderService, PhotoMetadataReaderService>();
             services.AddTransient<IPhotoStorageService, PhotoStorageService>();
             services.AddTransient<IAlbumsService, AlbumsService>();
             services.AddTransient<ILicenseService, LicenseService>();
