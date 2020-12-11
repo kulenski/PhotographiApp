@@ -3,16 +3,24 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     using PhotographiApp.Data.Models;
     using PhotographiApp.Services.Data.Tests.Mock;
     using PhotographiApp.Services.Data.Tests.Seed;
+    using PhotographiApp.Services.Mapping;
+    using PhotographiApp.Web.ViewModels;
     using PhotographiApp.Web.ViewModels.Albums;
     using PhotographiApp.Web.ViewModels.PhotoAlbum;
     using Xunit;
 
     public class AlbumsServiceTests
     {
+        public AlbumsServiceTests()
+        {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+        }
+
         [Fact]
         public void Create_ShouldCreateAlbumSuccessfully()
         {
@@ -133,30 +141,44 @@
             Assert.Empty(listAlbums);
         }
 
-        // [Fact]
-        // public void GetById_ShouldReturnCorrectData()
-        // {
-        //    var user = UserCreator.Create("test");
-        //    var album = AlbumCreator.Create(false, user);
+        [Fact]
+        public void GetById_ShouldReturnCorrectData()
+        {
+            var user = UserCreator.Create("test");
+            var album = AlbumCreator.Create(false, user);
 
-        // var listAlbums = new List<Album>() { album };
-        //    var listPhotoAlbums = new List<PhotoAlbum>();
+            var listAlbums = new List<Album>() { album };
+            var listPhotoAlbums = new List<PhotoAlbum>();
 
-        // var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(listPhotoAlbums);
-        //    var albumsRepo = DeletableEntityRepositoryMock.Get<Album>(listAlbums);
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(listPhotoAlbums);
+            var albumsRepo = DeletableEntityRepositoryMock.Get<Album>(listAlbums);
 
-        // var service = new AlbumsService(albumsRepo.Object, photoAlbumsRepo.Object);
-        //    var returnedAlbum = service.GetById<AlbumViewModel>(album.Id, user.Id);
+            var service = new AlbumsService(albumsRepo.Object, photoAlbumsRepo.Object);
+            var returnedAlbum = service.GetById<AlbumViewModel>(album.Id, user.Id);
 
-        // Assert.Equal(album.Id, returnedAlbum.Id);
-        //    Assert.Equal(album.Name, returnedAlbum.Name);
-        //    Assert.Equal(album.Description, returnedAlbum.Description);
-        // }
+            Assert.Equal(album.Id, returnedAlbum.Id);
+            Assert.Equal(album.Name, returnedAlbum.Name);
+            Assert.Equal(album.Description, returnedAlbum.Description);
+        }
 
-        // [Fact]
-        // public void GetById_ShouldReturnNullDataWhenAlbumDoesNotExists()
-        // {
-        // }
+        [Fact]
+        public void GetById_ShouldReturnNullDataWhenAlbumDoesNotExists()
+        {
+            var user = UserCreator.Create("test");
+            var album = AlbumCreator.Create(false, user);
+
+            var listAlbums = new List<Album>();
+            var listPhotoAlbums = new List<PhotoAlbum>();
+
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(listPhotoAlbums);
+            var albumsRepo = DeletableEntityRepositoryMock.Get<Album>(listAlbums);
+
+            var service = new AlbumsService(albumsRepo.Object, photoAlbumsRepo.Object);
+            var returnedAlbum = service.GetById<AlbumViewModel>(album.Id, user.Id);
+
+            Assert.Null(returnedAlbum);
+        }
+
         [Fact]
         public void GetAlbumPhotos_ShouldThrowErrorWhenAlbumDoesNotExists()
         {
@@ -176,24 +198,92 @@
             Assert.Contains("Album does not exist!", ex.Message);
         }
 
-        // [Fact]
-        // public void GetAlbumPhotos_ShouldReturnPublicPhotosWhenUserIsNotOwner()
-        // {
-        // }
+        [Fact]
+        public void GetAlbumPhotos_ShouldReturnPublicPhotosWhenUserIsNotOwner()
+        {
+            var user = UserCreator.Create("test");
+            var visitor = UserCreator.Create("visitor");
+            var publicPhoto = PhotoCreator.Create(user, false, false);
+            var privatePhoto = PhotoCreator.Create(user, true, false);
+            var album = AlbumCreator.Create(false, user);
 
-        // [Fact]
-        // public void GetAlbumPhotos_ShouldReturnAllPhotosWhenUserIsOwner()
-        // {
-        // }
+            var listAlbums = new List<Album>() { album };
+            var listPhotoAlbums = new List<PhotoAlbum>()
+            {
+                PhotoAlbumCreator.Create(publicPhoto, album),
+                PhotoAlbumCreator.Create(privatePhoto, album),
+            };
 
-        // [Fact]
-        // public void GetUserAlbums_ShouldReturnAllAlbumsWhereUserIsOwner()
-        // {
-        // }
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(listPhotoAlbums);
+            var albumsRepo = DeletableEntityRepositoryMock.Get<Album>(listAlbums);
 
-        // [Fact]
-        // public void GetUserAlbums_ShouldReturnPublicAlbumsWhereUserIsNotOwner()
-        // {
-        // }
+            var service = new AlbumsService(albumsRepo.Object, photoAlbumsRepo.Object);
+            var photos = service.GetAlbumPhotos<PhotoAlbumViewModel>(album.Id, visitor.Id);
+
+            Assert.Single(photos);
+        }
+
+        [Fact]
+        public void GetAlbumPhotos_ShouldReturnAllPhotosWhenUserIsOwner()
+        {
+            var user = UserCreator.Create("test");
+            var publicPhoto = PhotoCreator.Create(user, false, false);
+            var privatePhoto = PhotoCreator.Create(user, true, false);
+            var album = AlbumCreator.Create(false, user);
+
+            var listAlbums = new List<Album>() { album };
+            var listPhotoAlbums = new List<PhotoAlbum>()
+            {
+                PhotoAlbumCreator.Create(publicPhoto, album),
+                PhotoAlbumCreator.Create(privatePhoto, album),
+            };
+
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(listPhotoAlbums);
+            var albumsRepo = DeletableEntityRepositoryMock.Get<Album>(listAlbums);
+
+            var service = new AlbumsService(albumsRepo.Object, photoAlbumsRepo.Object);
+            var photos = service.GetAlbumPhotos<PhotoAlbumViewModel>(album.Id, user.Id);
+
+            Assert.Equal(2, photos.Count);
+        }
+
+        [Fact]
+        public void GetUserAlbums_ShouldReturnAllAlbumsWhereUserIsOwner()
+        {
+            var user = UserCreator.Create("test");
+            var privateAlbum = AlbumCreator.Create(true, user);
+            var publicAlbum = AlbumCreator.Create(false, user);
+
+            var listAlbums = new List<Album>() { privateAlbum, publicAlbum };
+            var listPhotoAlbums = new List<PhotoAlbum>();
+
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(listPhotoAlbums);
+            var albumsRepo = DeletableEntityRepositoryMock.Get<Album>(listAlbums);
+
+            var service = new AlbumsService(albumsRepo.Object, photoAlbumsRepo.Object);
+            var albums = service.GetUserAlbums<AlbumViewModel>(user.Id, user.Id);
+
+            Assert.Equal(2, albums.Count);
+        }
+
+        [Fact]
+        public void GetUserAlbums_ShouldReturnPublicAlbumsWhereUserIsNotOwner()
+        {
+            var user = UserCreator.Create("test");
+            var visitor = UserCreator.Create("visitor");
+            var privateAlbum = AlbumCreator.Create(true, user);
+            var publicAlbum = AlbumCreator.Create(false, user);
+
+            var listAlbums = new List<Album>() { privateAlbum, publicAlbum };
+            var listPhotoAlbums = new List<PhotoAlbum>();
+
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(listPhotoAlbums);
+            var albumsRepo = DeletableEntityRepositoryMock.Get<Album>(listAlbums);
+
+            var service = new AlbumsService(albumsRepo.Object, photoAlbumsRepo.Object);
+            var albums = service.GetUserAlbums<AlbumViewModel>(user.Id, visitor.Id);
+
+            Assert.Single(albums);
+        }
     }
 }

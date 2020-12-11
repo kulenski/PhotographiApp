@@ -3,17 +3,26 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using System.Reflection;
     using System.Text;
 
     using Microsoft.AspNetCore.Http.Internal;
     using PhotographiApp.Data.Models;
     using PhotographiApp.Services.Data.Tests.Mock;
     using PhotographiApp.Services.Data.Tests.Seed;
+    using PhotographiApp.Services.Mapping;
+    using PhotographiApp.Web.ViewModels;
     using PhotographiApp.Web.ViewModels.Photos;
     using Xunit;
 
     public class PhotoServiceTests
     {
+        public PhotoServiceTests()
+        {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+        }
+
         [Fact]
         public void Create_ShouldNotCreateWhenExtensionIsNotCorrect()
         {
@@ -157,31 +166,79 @@
         [Fact]
         public void GetById_ShouldNotReturnPrivatePhotoWhenUserIsNotOwner()
         {
-            // TODO: To be implemented when figure out how to fix automapper error.
-        }
+            var user = UserCreator.Create("test");
+            var visitor = UserCreator.Create("visitor");
+            var privatePhoto = PhotoCreator.Create(user, true, false);
+            var publicPhoto = PhotoCreator.Create(user, false, false);
 
-        [Fact]
-        public void GetById_ShouldReturnPhotoCorrectly()
-        {
-            // TODO: To be implemented when figure out how to fix automapper error.
+            var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(new List<Photo>() { privatePhoto, publicPhoto });
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
+            var storageService = PhotoStorageServiceMock.Get();
+
+            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var privatePhotoResult = service.GetById<PhotoViewModel>(privatePhoto.Id, visitor.Id);
+            var publicPhotoResult = service.GetById<PhotoViewModel>(publicPhoto.Id, visitor.Id);
+
+            Assert.Null(privatePhotoResult);
+            Assert.NotNull(publicPhotoResult);
         }
 
         [Fact]
         public void GetAllByUserId_ShouldReturnOnlyPublicPhotosWhenUserIsNotOwner()
         {
-            // TODO: To be implemented when figure out how to fix automapper error.
+            var user = UserCreator.Create("test");
+            var visitor = UserCreator.Create("visitor");
+            var privatePhoto = PhotoCreator.Create(user, true, false);
+            var publicPhoto = PhotoCreator.Create(user, false, false);
+
+            var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(new List<Photo>() { privatePhoto, publicPhoto });
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
+            var storageService = PhotoStorageServiceMock.Get();
+
+            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var result = service.GetAllByUserId<PhotoViewModel>(user.Id, visitor.Id);
+
+            Assert.Single(result);
+            Assert.Equal(publicPhoto.Id, result.First().Id);
         }
 
         [Fact]
         public void GetAllByUserId_ShouldReturnAllPhotosWhenUserIsOwner()
         {
-            // TODO: To be implemented when figure out how to fix automapper error.
+            var user = UserCreator.Create("test");
+            var privatePhoto = PhotoCreator.Create(user, true, false);
+            var publicPhoto = PhotoCreator.Create(user, false, false);
+
+            var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(new List<Photo>() { privatePhoto, publicPhoto });
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
+            var storageService = PhotoStorageServiceMock.Get();
+
+            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var result = service.GetAllByUserId<PhotoViewModel>(user.Id, user.Id);
+
+            Assert.Equal(2, result.Count);
         }
 
         [Fact]
         public void GetLatestPublic_ShouldReturnOnlyPublicPhotos()
         {
-            // TODO: To be implemented when figure out how to fix automapper error.
+            var user = UserCreator.Create("test");
+            var photos = new List<Photo>()
+            {
+                PhotoCreator.Create(user, false, false),
+                PhotoCreator.Create(user, true, false),
+                PhotoCreator.Create(user, false, false),
+                PhotoCreator.Create(user, true, false),
+            };
+
+            var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(photos);
+            var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
+            var storageService = PhotoStorageServiceMock.Get();
+
+            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var result = service.GetLatestPublic<PhotoViewModel>();
+
+            Assert.Equal(2, result.Count);
         }
     }
 }

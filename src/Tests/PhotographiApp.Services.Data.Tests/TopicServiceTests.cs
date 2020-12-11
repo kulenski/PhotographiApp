@@ -2,14 +2,23 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection;
 
     using PhotographiApp.Data.Models;
     using PhotographiApp.Services.Data.Tests.Mock;
     using PhotographiApp.Services.Data.Tests.Seed;
+    using PhotographiApp.Services.Mapping;
+    using PhotographiApp.Web.ViewModels;
+    using PhotographiApp.Web.ViewModels.Topic;
     using Xunit;
 
     public class TopicServiceTests
     {
+        public TopicServiceTests()
+        {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+        }
+
         [Fact]
         public void Create_ShouldExecuteCorrectly()
         {
@@ -58,19 +67,54 @@
         [Fact]
         public void GetAllByUser_ShouldReturnCorrectData()
         {
-            // TODO: To be implemented when figure out how to fix automapper error.
+            var user = UserCreator.Create("test");
+            var visitor = UserCreator.Create("visitor");
+            var other = UserCreator.Create("other");
+            var list = new List<Topic>() { TopicCreator.Create(user), TopicCreator.Create(visitor) };
+
+            var topicRepo = DeletableEntityRepositoryMock.Get<Topic>(list);
+            var service = new TopicService(topicRepo.Object);
+
+            var userTopics = service.GetAllByUser<TopicViewModel>(user.Id);
+            var visitorTopics = service.GetAllByUser<TopicViewModel>(visitor.Id);
+            var otherTopics = service.GetAllByUser<TopicViewModel>(other.Id);
+
+            Assert.Single(userTopics);
+            Assert.Single(visitorTopics);
+            Assert.Empty(otherTopics);
         }
 
         [Fact]
         public void GetById_ShouldReturnCorrectData()
         {
-            // TODO: To be implemented when figure out how to fix automapper error.
+            var user = UserCreator.Create("test");
+            var topic = TopicCreator.Create(user);
+
+            var topicRepo = DeletableEntityRepositoryMock.Get<Topic>(new List<Topic>() { topic });
+            var service = new TopicService(topicRepo.Object);
+
+            var result = service.GetById<TopicViewModel>(topic.Id);
+
+            Assert.NotNull(result);
+            Assert.Equal(topic.Id, result.Id);
         }
 
         [Fact]
         public void GetLatest_ShouldReturnCorrectData()
         {
-            // TODO: To be implemented when figure out how to fix automapper error.
+            var user = UserCreator.Create("test");
+            var list = new List<Topic>()
+            {
+                TopicCreator.Create(user),
+                TopicCreator.Create(user),
+            };
+
+            var topicRepo = DeletableEntityRepositoryMock.Get<Topic>(list);
+            var service = new TopicService(topicRepo.Object);
+
+            var result = service.GetLatest<TopicViewModel>();
+
+            Assert.Equal(2, result.Count);
         }
     }
 }
