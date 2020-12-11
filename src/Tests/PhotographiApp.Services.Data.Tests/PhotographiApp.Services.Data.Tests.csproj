@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
     <PackageReference Include="Moq" Version="4.15.2" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\PhotographiApp.Data\PhotographiApp.Data.csproj" />
     <ProjectReference Include="..\..\Services\PhotographiApp.Services.Data\PhotographiApp.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\PhotographiApp.Services.Mapping\PhotographiApp.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

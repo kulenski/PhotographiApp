@@ -105,12 +105,12 @@
                 .Where(x => (x.Id == albumId && (x.OwnerId == userId || x.IsPrivate == false)))
                 .FirstOrDefault();
 
-            bool isAlbumOwnedByCurrentUser = userId == album.OwnerId;
-
             if (album == null)
             {
                 throw new Exception("Album does not exist!");
             }
+
+            bool isAlbumOwnedByCurrentUser = userId == album.OwnerId;
 
             if (isAlbumOwnedByCurrentUser)
             {
