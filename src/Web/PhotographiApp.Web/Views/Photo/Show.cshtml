@@ -7,8 +7,8 @@
 <div class="row mr-0 ml-0">
     <img src="@Model.Href" class="img-fluid" alt="@Model.Title">
 </div>
-<div class="row mr-0 ml-0" >
-    <ul class="nav" style="background-color: #fafafa; width: 100%;  border-bottom: 1px solid #cccccc; border-top: 1px solid #cccccc;">
+<div class="row mr-0 ml-0 action-bar-row" >
+    <ul class="nav action-bar">
         @if (Model.IsOwnerByCurrentUser)
         {
             <li class="nav-item">

@@ -62,3 +62,12 @@ body {
     margin-right: 15px;
     margin-left: 15px;
 }
+
+.nav.action-bar > .nav-item > .nav-link.active {
+    color: #fff;
+}
+
+.action-bar-row {
+    background-color: #343a40;
+    color: #ffffff;
+}

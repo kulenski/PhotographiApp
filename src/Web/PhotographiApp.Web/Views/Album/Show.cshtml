@@ -1,10 +1,14 @@
 ﻿@using PhotographiApp.Web.ViewModels.Albums
 @model AlbumViewModel
 
+@{ 
+    ViewData["Title"] = $"Album - {Model.Name}";
+}
+
 @if (Model.IsOwnerByCurrentUser)
 {
-    <div class="row" style="margin-left: 0; margin-right:0">
-        <ul class="nav" style="background-color: #fafafa; width: 100%; border-bottom: 1px solid #cccccc;">
+    <div class="row ml-0 mr-0 action-bar-row">
+        <ul class="nav action-bar-row">
             <li class="nav-item">
                 <a asp-controller="Album" asp-action="Edit" asp-route-id="@Model.Id" class="nav-link active">Edit</a>
             </li>
