@@ -8,21 +8,21 @@
 @if (Model.IsOwnerByCurrentUser)
 {
     <div class="row ml-0 mr-0 action-bar-row">
-        <ul class="nav action-bar-row">
+        <ul class="nav action-bar">
             <li class="nav-item">
-                <a asp-controller="Album" asp-action="Edit" asp-route-id="@Model.Id" class="nav-link active">Edit</a>
+                <a asp-controller="Album" asp-action="Edit" asp-route-id="@Model.Id" class="nav-link active"><i class="far fa-edit"></i> Edit</a>
             </li>
             <li class="nav-item">
-                <a asp-controller="Album" asp-action="Delete" asp-route-id="@Model.Id" class="nav-link active">Delete</a>
+                <a asp-controller="Album" asp-action="Delete" asp-route-id="@Model.Id" class="nav-link active"><i class="fas fa-trash"></i> Delete</a>
             </li>
         </ul>
     </div>
 }
 
-<div class="row">
+<div class="row mt-3">
     <div class="col-12">
         <h2>@Model.Name</h2>
-        <h5>@Model.Description</h5>
+        <small>@Model.Description</small>
     </div>
 </div>
 
@@ -30,7 +30,7 @@
     <div class="col-12">
         @foreach (var photo in Model.Photos)
         {
-            <a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.PhotoId"><img src="@photo.PhotoThumbnailHref" width="100" height="100" alt="@photo.PhotoTitle" /></a>
+            <partial name="_PhotoAlbumThumbnail" model="photo"/>
         }
     </div>
 </div>

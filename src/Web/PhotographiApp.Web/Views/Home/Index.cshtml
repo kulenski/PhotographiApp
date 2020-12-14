@@ -4,18 +4,21 @@
     this.ViewData["Title"] = "Welcome to Photographi";
 }
 
-<div class="row">
+<div class="row mt-3">
     <div class="col-12">
-        <h1>Latest uploads</h1>
+        <h4>Latest uploads</h4>
+        <hr />
     </div>
     <div class="col-12">
         @foreach (var photo in Model.LatestPhotos)
         {
-            <a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.Id"><img src="@photo.ThumbnailHref" alt="@photo.Title" /></a>
+            @*<a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.Id"><img src="@photo.ThumbnailHref" alt="@photo.Title" /></a>*@
+            <partial name="_PhotoThumbnail" model="photo"/>
         }
     </div>
-    <div class="col-12">
-        <h1>Latest topics</h1>
+    <div class="col-12 mt-3">
+        <h4>Latest topics</h4>
+        <hr />
     </div>
     <div class="col-6">
         <ul class="list-group">

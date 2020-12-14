@@ -7,11 +7,21 @@
     }
     else
     {
-        foreach (var comment in Model)
+        @foreach (var comment in Model)
         {
-            <p>(@comment.UserUserName / @comment.CreatedOn.ToString("ddd MMM yyyy, hh:mm") @comment.Value</p>
-            <hr />
+            <div class="review mt-4">
+                <div class="d-flex flex-row comment-user">
+                    <img class="rounded" src="~/images/anonymous-user.jpg" width="40">
+                    <div class="ml-2">
+                        <div class="d-flex flex-row align-items-center">
+                            <span class="name font-weight-bold"><a asp-controller="Profile" asp-action="Show" asp-route-id="@comment.UserId">@comment.UserUserName</a></span><span class="date"> @comment.CreatedOn.ToString("ddd MMM yyyy, hh:mm")</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <p class="comment-text">@comment.Value</p>
+                </div>
+            </div>
         }
     }
 </div>
-

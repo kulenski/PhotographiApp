@@ -71,3 +71,65 @@ body {
     background-color: #343a40;
     color: #ffffff;
 }
+
+.photo-thumbnail-container {
+    position: relative;
+    width: 128px;
+    height: 128px;
+    float: left;
+    margin: 1px;
+}
+
+    .photo-thumbnail-container > img {
+        width: 128px;
+        height: 128px;
+    }
+
+    .photo-thumbnail-container > .photo-thumbnail-title {
+        bottom: 0;
+        left: 0;
+        width: 128px;
+        background-color: #343a40;
+        opacity: 0.7;
+        color: #ffffff;
+        font-size: 10px;
+        position: absolute;
+        padding: 2px;
+    }
+
+.img-fluid {
+    max-height: 1400px;
+}
+
+.photo-container {
+    background-color: #000000;
+}
+
+.dot {
+    height: 6px;
+    width: 6px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 2px;
+    background-color: rgb(91, 92, 91);
+    border-radius: 50%;
+    display: inline-block
+}
+
+.name {
+    font-size: 16px
+}
+
+.date {
+    padding-left: 4px;
+    font-size: 14px
+}
+
+.rating i {
+    color: green;
+    font-size: 13px
+}
+
+.comment-text {
+    font-size: 16px
+}

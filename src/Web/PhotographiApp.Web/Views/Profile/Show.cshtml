@@ -4,9 +4,9 @@
     ViewData["Title"] = $"Profile - {Model.UserName}";
 }
 
-<div class="row">
+<div class="row mt-3">
     <div class="col-12">
-        <h4>@Model.UserName</h4>
+        <h4>@Model.UserName <small>'s profile</small></h4>
         <hr />
     </div>
 </div>
@@ -17,7 +17,7 @@
         <hr />
         @foreach (var photo in Model.Photos)
         {
-            <a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.Id"><img src="@photo.ThumbnailHref" width="100" height="100" alt="@photo.Title" /></a>
+            <partial name="_PhotoThumbnail" model="photo"/>
         }
     </div>
     <div class="col-3">
@@ -55,7 +55,7 @@
         <hr />
         @foreach (var photo in Model.FavoritePhotos)
         {
-            <a asp-controller="Photo" asp-action="Show" asp-route-id="@photo.Id"><img src="@photo.ThumbnailHref" width="100" height="100" alt="@photo.Title" /></a>
+            <partial name="_PhotoThumbnail" model="photo" />
         }
     </div>
 </div>

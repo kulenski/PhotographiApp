@@ -1,0 +1,9 @@
+﻿@using PhotographiApp.Web.ViewModels.PhotoAlbum
+@model PhotoAlbumViewModel
+
+<a asp-controller="Photo" asp-action="Show" asp-route-id="@Model.PhotoId" class="photo-thumbnail-container">
+    <img src="@Model.PhotoThumbnailHref" alt="@Model.PhotoTitle" />
+    <div class="photo-thumbnail-title">
+        @Model.PhotoTitle
+    </div>
+</a>
