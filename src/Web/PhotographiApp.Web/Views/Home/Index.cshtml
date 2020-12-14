@@ -17,11 +17,19 @@
     <div class="col-12">
         <h1>Latest topics</h1>
     </div>
-    <div class="col-12">
-        @foreach (var topic in Model.LatestTopics)
-        {
-            <h5><a asp-controller="Topic" asp-action="Show" asp-route-id="@topic.Id">@topic.Title</a></h5>
-        }
+    <div class="col-6">
+        <ul class="list-group">
+            @foreach (var topic in Model.LatestTopics)
+            {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a asp-controller="Topic" asp-action="Show" asp-route-id="@topic.Id">@topic.Title</a>
+                <div>
+                    <span class="badge badge-secondary badge-pill"><i class="far fa-calendar-alt"></i> @topic.CreatedOn.ToString("ddd MMM yyyy, hh:mm")</span>
+                    <span class="badge badge-dark badge-pill"><i class="far fa-comments"></i> @topic.Replies.Count</span>
+                </div>
+            </li>                
+            } 
+        </ul>
     </div>
 </div>
 

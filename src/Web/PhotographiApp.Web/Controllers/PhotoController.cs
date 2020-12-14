@@ -80,7 +80,6 @@
             return this.View();
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Show(string id)
         {

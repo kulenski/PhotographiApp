@@ -1,12 +1,22 @@
 ﻿@using PhotographiApp.Web.ViewModels.TopicReply
 @model ICollection<TopicReplyViewModel>
 
-@foreach (var reply in Model)
-{
-    <div class="card">
+<div class="list-group list-group-flush">
+    @foreach (var reply in Model)
+    {
+        <div class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1"><a asp-controller="Profile" asp-action="Show" asp-route-id="@reply.UserId">@reply.UserUserName</a></h6>
+                <small>@reply.CreatedOn.ToString("ddd MMM yyyy, hh:mm")</small>
+            </div>
+            <p class="mb-1">@reply.Value</p>
+        </div>
+    }
+    </div>
+
+    @*<div class="card">
         <div class="card-header">
             <a asp-controller="Profile" asp-action="Show" asp-route-id="@reply.UserId">@reply.UserUserName</a> commented on @reply.CreatedOn.ToString("ddd MMM yyyy, hh:mm")
         </div>
         <div class="card-body">@reply.Value</div>
-    </div>
-} 
+    </div>*@

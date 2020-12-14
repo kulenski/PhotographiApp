@@ -44,6 +44,10 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    background-image: url("../images/app_background_small.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom right;
 }
 .footer {
     position: absolute;

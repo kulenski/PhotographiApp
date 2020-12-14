@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" asp-append-version="true"/>
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-camera"></i> @GlobalConstants.SystemName</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,16 +28,16 @@
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Photo" asp-action="Upload">Upload photo</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Photo" asp-action="Upload"><i class="fas fa-arrow-circle-up"></i> Upload photo</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Album" asp-action="Create">Create album</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Album" asp-action="Create"><i class="fas fa-images"></i> Create album</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Topic" asp-action="Create">Create topic</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Topic" asp-action="Create"><i class="far fa-comment-dots"></i> Create topic</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Show" asp-route-id="@this.User.FindFirst(ClaimTypes.NameIdentifier).Value">Profile</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Show" asp-route-id="@this.User.FindFirst(ClaimTypes.NameIdentifier).Value"><i class="fas fa-id-card"></i> Your profile</a>
                             </li>
                         }
                     </ul>
@@ -60,6 +61,7 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/font-awesome/js/all.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>

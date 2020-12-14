@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Web.ViewModels;
@@ -9,6 +10,7 @@
     using PhotographiApp.Web.ViewModels.Photos;
     using PhotographiApp.Web.ViewModels.Topic;
 
+    [Authorize]
     public class HomeController : BaseController
     {
         private readonly IPhotoService photoService;

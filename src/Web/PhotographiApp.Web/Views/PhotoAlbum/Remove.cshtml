@@ -9,7 +9,7 @@
     <div asp-validation-summary="All" class="text-danger"></div>
     <input asp-for="PhotoId" hidden />
     <div class="form-group">
-        <label asp-for="AlbumId"></label>
+        <label asp-for="AlbumId">Album</label>
         <select asp-for="AlbumId" class="form-control">
             @foreach (var album in Model.Albums)
             {
@@ -20,5 +20,5 @@
     </div>
 
 
-    <input type="submit" class="btn btn-primary" />
+    <input type="submit" class="btn btn-dark" title="Remove" value="Remve"/>
 </form>

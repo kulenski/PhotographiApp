@@ -4,8 +4,7 @@
     ViewData["Title"] = $"Topic - {Model.Title}";
 }
 
-<div class="row">
-
+<div class="row mt-3">
     <div class="col-12">
         @if (Model.IsOwnedByCurrentUser)
         {
@@ -16,18 +15,25 @@
                 </li>
             </ul>
         }
-        <div class="card">
-            <div class="card-header">@Model.Title</div>
-            <div class="card-body">@Model.Content</div>
-            <div class="card-footer">@Model.CreatedOn.ToString("ddd MMM yyyy, hh:mm") by <a asp-controller="Profile" asp-action="Show" asp-route-id="@Model.OwnerId">@Model.OwnerUserName</a></div>
+        <div class="list-group list-group-flush">
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1">@Model.Title</h6>
+                    <small>@Model.CreatedOn.ToString("ddd MMM yyyy, hh:mm")</small>
+                </div>
+                <p class="mb-1">@Model.Content</p>
+                <small><a asp-controller="Profile" asp-action="Show" asp-route-id="@Model.OwnerId">@Model.OwnerUserName</a></small>
+            </div>
         </div>
-    </div>
-    <div class="col-12" style="padding-left:30px;">
-        <hr />
-        @if (User.Identity.IsAuthenticated)
-        {
-            <a asp-controller="TopicReply" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-primary">Add reply</a>
-        }
-        <partial name="~/Views/TopicReply/TopicRepliesPartial.cshtml" model="Model.Replies" />
+
+        <div class="col-12" style="padding-left:30px;">
+            <hr />
+            <partial name="~/Views/TopicReply/TopicRepliesPartial.cshtml" model="Model.Replies" />
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="TopicReply" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-dark mb-2"><i class="far fa-comments"></i> Add reply</a>
+
+            }
+        </div>
     </div>
 </div>
