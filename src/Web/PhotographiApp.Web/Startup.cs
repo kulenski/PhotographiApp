@@ -75,6 +75,7 @@
             // Application services
             services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
             services.AddTransient<IPhotoStorageService, PhotoStorageService>();
+            services.AddTransient<IPhotoMetadataService, PhotoMetadataService>();
             services.AddTransient<IAlbumsService, AlbumsService>();
             services.AddTransient<ILicenseService, LicenseService>();
             services.AddTransient<IPhotoService, PhotoService>();

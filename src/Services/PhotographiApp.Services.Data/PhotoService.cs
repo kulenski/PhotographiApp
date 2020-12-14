@@ -11,6 +11,7 @@
     using PhotographiApp.Services.Data.Interfaces;
     using PhotographiApp.Services.Interfaces;
     using PhotographiApp.Services.Mapping;
+    using PhotographiApp.Services.Models;
     using PhotographiApp.Web.ViewModels.Photos;
 
     public class PhotoService : IPhotoService
@@ -18,15 +19,18 @@
         private readonly string[] allowedExtensions = new[] { "jpg", "png", "gif" };
         private readonly IDeletableEntityRepository<Photo> photoRespository;
         private readonly IPhotoStorageService photoStorageService;
+        private readonly IPhotoMetadataService photoMetadataService;
         private readonly IRepository<PhotoAlbum> photoAlbumRepository;
 
         public PhotoService(
             IDeletableEntityRepository<Photo> photoRespository,
             IPhotoStorageService photoStorageService,
+            IPhotoMetadataService photoMetadataService,
             IRepository<PhotoAlbum> photoAlbumRepository)
         {
             this.photoRespository = photoRespository;
             this.photoStorageService = photoStorageService;
+            this.photoMetadataService = photoMetadataService;
             this.photoAlbumRepository = photoAlbumRepository;
         }
 
@@ -47,6 +51,9 @@
             {
                 throw new Exception($"Invalid image extension {extension}");
             }
+
+            var metadata = this.photoMetadataService.GetMetadata(model.File);
+            photo = this.WriteMetadataToPhoto(photo, metadata);
 
             var uploadResult = await this.photoStorageService.UploadImageAsync(model.File);
             var publicId = uploadResult.PublicId;
@@ -130,6 +137,17 @@
                     .To<T>()
                     .ToList();
             return photos;
+        }
+
+        private Photo WriteMetadataToPhoto(Photo photo, PhotoMetadata metadata)
+        {
+            photo.Camera = metadata.Camera;
+            photo.Aperture = metadata.Aperture;
+            photo.DateTaken = metadata.DateTaken;
+            photo.ExposureTime = metadata.ExposureTime;
+            photo.Flash = metadata.Flash;
+            photo.Iso = metadata.Iso;
+            return photo;
         }
     }
 }

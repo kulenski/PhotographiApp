@@ -42,8 +42,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(list);
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             Exception ex = Assert.Throws<AggregateException>(() => service.CreatePhotoAsync(user.Id, "path", model).Wait());
 
             Assert.Contains("Invalid image extension", ex.Message);
@@ -69,8 +70,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(list);
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             service.CreatePhotoAsync(user.Id, "path", model).Wait();
 
             Assert.Single(list);
@@ -87,8 +89,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(list);
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             Exception ex = Assert.Throws<AggregateException>(() => service.UpdatePhotoAsync(photo.Id, visitor.Id, new EditPhotoViewModel()).Wait());
 
             Assert.Contains("Such photo does not exists", ex.Message);
@@ -104,8 +107,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(list);
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             Exception ex = Assert.Throws<AggregateException>(() => service.UpdatePhotoAsync(photo.Id, user.Id, new EditPhotoViewModel()).Wait());
 
             Assert.Contains("Such photo does not exists", ex.Message);
@@ -121,8 +125,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(list);
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             Exception ex = Assert.Throws<AggregateException>(() => service.DeletePhotoAsync(photo.Id, user.Id).Wait());
 
             Assert.Contains("Such photo does not exists", ex.Message);
@@ -139,8 +144,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(list);
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             Exception ex = Assert.Throws<AggregateException>(() => service.DeletePhotoAsync(photo.Id, visitor.Id).Wait());
 
             Assert.Contains("Such photo does not exists", ex.Message);
@@ -156,8 +162,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(list);
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             service.DeletePhotoAsync(photo.Id, user.Id).Wait();
 
             Assert.Empty(list);
@@ -174,8 +181,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(new List<Photo>() { privatePhoto, publicPhoto });
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             var privatePhotoResult = service.GetById<PhotoViewModel>(privatePhoto.Id, visitor.Id);
             var publicPhotoResult = service.GetById<PhotoViewModel>(publicPhoto.Id, visitor.Id);
 
@@ -194,8 +202,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(new List<Photo>() { privatePhoto, publicPhoto });
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             var result = service.GetAllByUserId<PhotoViewModel>(user.Id, visitor.Id);
 
             Assert.Single(result);
@@ -212,8 +221,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(new List<Photo>() { privatePhoto, publicPhoto });
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             var result = service.GetAllByUserId<PhotoViewModel>(user.Id, user.Id);
 
             Assert.Equal(2, result.Count);
@@ -234,8 +244,9 @@
             var photosRepo = DeletableEntityRepositoryMock.Get<Photo>(photos);
             var photoAlbumsRepo = EfRepositoryMock.Get<PhotoAlbum>(new List<PhotoAlbum>());
             var storageService = PhotoStorageServiceMock.Get();
+            var metadataService = PhotoMetadataServiceMock.Get();
 
-            var service = new PhotoService(photosRepo.Object, storageService.Object, photoAlbumsRepo.Object);
+            var service = new PhotoService(photosRepo.Object, storageService.Object, metadataService.Object, photoAlbumsRepo.Object);
             var result = service.GetLatestPublic<PhotoViewModel>();
 
             Assert.Equal(2, result.Count);
