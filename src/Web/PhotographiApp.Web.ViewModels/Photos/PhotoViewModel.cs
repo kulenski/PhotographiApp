@@ -43,6 +43,8 @@
 
         public string Flash { get; set; }
 
+        public string LicenseName { get; set; }
+
         public DateTime? DateTaken { get; set; }
 
         public DateTime CreatedOn { get; set; }
