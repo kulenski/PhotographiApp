@@ -38,10 +38,6 @@
 
         public DbSet<PhotoFavorite> PhotoFavorites { get; set; }
 
-        public DbSet<PhotoTag> PhotoTags { get; set; }
-
-        public DbSet<Tag> Tags { get; set; }
-
         public DbSet<Topic> Topics { get; set; }
 
         public DbSet<TopicReply> TopicReplies { get; set; }

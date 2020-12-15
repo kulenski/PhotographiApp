@@ -14,7 +14,6 @@
             this.Albums = new HashSet<PhotoAlbum>();
             this.Comments = new HashSet<Comment>();
             this.Favorites = new HashSet<PhotoFavorite>();
-            this.Tags = new HashSet<PhotoTag>();
         }
 
         public string Title { get; set; }
@@ -54,8 +53,6 @@
         public DateTime? DateTaken { get; set; }
 
         public virtual ICollection<PhotoAlbum> Albums { get; set; }
-
-        public virtual ICollection<PhotoTag> Tags { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
 
