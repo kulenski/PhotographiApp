@@ -1,0 +1,33 @@
+﻿@using PhotographiApp.Web.ViewModels.Administration.Licenses
+@model ICollection<LicenseViewModel>
+@{
+    ViewData["Title"] = "Licenses";
+}
+
+<div class="row mt-3">
+    <div class="col-md-8 offset-md-2">
+        <a asp-area="Administration" asp-controller="Licenses" asp-action="Create" class="btn btn-dark" role="button">Create</a>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var license in Model)
+                {
+                    <tr>
+                        <td>@license.Name</td>
+                        <td>@license.Description</td>
+                        <td>
+                            <a asp-area="Administration" asp-controller="Licenses" asp-action="Edit" asp-route-id="@license.Id" class="btn btn-dark" role="button">Edit</a>
+                            <a asp-area="Administration" asp-controller="Licenses" asp-action="Delete" asp-route-id="@license.Id" class="btn btn-danger" role="button">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

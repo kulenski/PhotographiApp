@@ -2,6 +2,11 @@
 @model PhotoViewModel
 @{
     ViewData["Title"] = Model.Title;
+    var camera = Model.Camera ?? "Unknown";
+    var aperture = Model.Aperture ?? "Unknown";
+    var iso = Model.Iso ?? "Unknown";
+    var flash = Model.Flash ?? "Unknown";
+    var exposureTime = Model.ExposureTime ?? "Unknown";
 }
 
 <div class="row mr-0 ml-0 justify-content-center photo-container">
@@ -40,9 +45,19 @@
     </ul>
 </div>
 <div class="row ml-0 mr-0">
-    <div class="col mt-3">
+    <div class="col-9 mt-3">
         <h5>@Model.Title</h5>
         <small>@Model.Description</small>
+    </div>
+    <div class="col-3 mt-3">
+        <span><i class="fas fa-camera"></i> @camera</span><br/>
+        <span><i class="fas fa-ruler-horizontal"></i> @aperture</span><br />
+        <span><i class="fas fa-sun"></i> @exposureTime</span><br />
+        <span><i class="fas fa-bolt"></i> @flash</span><br />
+        @if (Model.DateTaken != null)
+        {
+            <span><i class="far fa-calendar-alt"></i> @Model.DateTaken</span>
+        }
     </div>
 </div>
 <hr />
@@ -65,10 +80,6 @@
             {
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <a asp-controller="Album" asp-action="Show" asp-route-id="@album.AlbumId">@album.AlbumName</a>
-                    @*<div>
-                        
-                        <span class="badge badge-dark badge-pill"><i class="far fa-comments"></i> @album.</span>
-                    </div>*@
                 </li>
             }
         </ul>
