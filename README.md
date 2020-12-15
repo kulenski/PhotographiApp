@@ -1,5 +1,6 @@
 # PhotographiApp
 The purpose of this app is to serve as photo management system with some social functionalitie like comments, discussions, faves.
+![Mock](https://github.com/kulenski/PhotographiApp/blob/master/PhotographiShowcase.png?raw=true)
 # Features
 Application allow users access and perform the following functionalities: 
 * Upload photos.
